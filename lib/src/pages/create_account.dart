@@ -86,7 +86,7 @@ class CreateAccount extends StatelessWidget {
                   children: [
                     TextInputField(
                       icon: FontAwesomeIcons.user,
-                      hint: 'Nombre de Usuario',
+                      hint: 'Nombre de usuario',
                       inputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                     ),
