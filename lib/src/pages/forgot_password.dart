@@ -28,7 +28,7 @@ class ForgotPassword extends StatelessWidget {
               ),
             ),
             title: Text(
-              'Forgot Password',
+              'Olvidé mi contraseña',
               style: kBodyText,
             ),
             centerTitle: true,
@@ -44,7 +44,7 @@ class ForgotPassword extends StatelessWidget {
                     Container(
                       width: size.width * 0.8,
                       child: Text(
-                        'Enter your email. We will send instructions to reset your password.',
+                        'Ingrese su correo. En un momento le enviaremos instrucciones para recuperar su contraseña.',
                         style: kBodyText,
                         textAlign: TextAlign.center,
                       ),
@@ -54,14 +54,14 @@ class ForgotPassword extends StatelessWidget {
                     ),
                     TextInputField(
                       icon: FontAwesomeIcons.envelope,
-                      hint: 'Email',
+                      hint: 'Correo',
                       inputType: TextInputType.emailAddress,
                       inputAction: TextInputAction.done,
                     ),
                     SizedBox(
                       height: 20,
                     ),
-                    RoundedButton(buttonName: 'Send')
+                    RoundedButton(buttonName: 'Enviar')
                   ],
                 ),
               )

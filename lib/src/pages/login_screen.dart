@@ -33,13 +33,13 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   TextInputField(
                     icon: FontAwesomeIcons.envelope,
-                    hint: 'Email',
+                    hint: 'Correo',
                     inputType: TextInputType.emailAddress,
                     inputAction: TextInputAction.next,
                   ),
                   PasswordInput(
                     icon: FontAwesomeIcons.lock,
-                    hint: 'Password',
+                    hint: 'Contraseña',
                     inputType: TextInputType.text,
                     inputAction: TextInputAction.done,
                   ),
@@ -47,7 +47,7 @@ class LoginScreen extends StatelessWidget {
                     onTap: () =>
                         Navigator.pushNamed(context, 'forgot_password'),
                     child: Text(
-                      'Forgot Password',
+                      'Olvidé mi contraseña',
                       style: kBodyText,
                     ),
                   ),
@@ -55,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                     height: 25,
                   ),
                   RoundedButton(
-                    buttonName: 'Login',
+                    buttonName: 'Iniciar Sesión',
                   ),
                   SizedBox(
                     height: 25,
@@ -66,7 +66,7 @@ class LoginScreen extends StatelessWidget {
                 onTap: () => Navigator.pushNamed(context, 'create_account'),
                 child: Container(
                   child: Text(
-                    'Create New Account',
+                    'Crear cuenta nueva',
                     style: kBodyText,
                   ),
                   decoration: BoxDecoration(

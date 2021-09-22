@@ -29,7 +29,7 @@ class CreateAccount extends StatelessWidget {
               ),
             ),
             title: Text(
-              'Register',
+              'Registro',
               style: kBodyText,
             ),
             centerTitle: true,
@@ -86,32 +86,32 @@ class CreateAccount extends StatelessWidget {
                   children: [
                     TextInputField(
                       icon: FontAwesomeIcons.user,
-                      hint: 'Username',
+                      hint: 'Nombre de usuario',
                       inputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                     ),
                     TextInputField(
                       icon: FontAwesomeIcons.envelope,
-                      hint: 'Email',
+                      hint: 'Correo',
                       inputType: TextInputType.emailAddress,
                       inputAction: TextInputAction.next,
                     ),
                     PasswordInput(
                       icon: FontAwesomeIcons.lock,
-                      hint: 'Password',
+                      hint: 'Contraseña',
                       inputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                     ),
                     PasswordInput(
                       icon: FontAwesomeIcons.lock,
-                      hint: 'Confirm Password',
+                      hint: 'Confirmar contraseña',
                       inputType: TextInputType.text,
                       inputAction: TextInputAction.done,
                     ),
                     SizedBox(
                       height: 25,
                     ),
-                    RoundedButton(buttonName: 'Register'),
+                    RoundedButton(buttonName: 'Registrarse'),
                     SizedBox(
                       height: 30,
                     ),
@@ -119,7 +119,7 @@ class CreateAccount extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Already have an account?',
+                          '¿Ya tiene una cuenta?',
                           style: kBodyText,
                         ),
                         GestureDetector(
@@ -127,7 +127,7 @@ class CreateAccount extends StatelessWidget {
                             Navigator.pushNamed(context, 'login');
                           },
                           child: Text(
-                            ' Login',
+                            ' Iniciar Sesión',
                             style: kBodyText.copyWith(
                               color: kBlue,
                               fontWeight: FontWeight.bold,
