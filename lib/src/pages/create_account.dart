@@ -16,8 +16,7 @@ class CreateAccount extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final userServices = Provider.of<UsersService>(context);
-    final User user =
-        new User(mail: "", password: "", birthDate: DateTime.now());
+
     return Stack(
       children: [
         BackgroundImage(image: 'assets/bg.jpg'),
@@ -97,7 +96,10 @@ class CreateAccount extends StatelessWidget {
                       inputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                       onChanged: (value) {
-                        user.fullName = value;
+                        userServices.currentUser.fullName = value;
+                        print('Nombre: ${userServices.currentUser.fullName}');
+                        print('Email: ${userServices.currentUser.mail}');
+                        print('Clave: ${userServices.currentUser.password}');
                       },
                     ),
                     TextInputField(
@@ -106,7 +108,10 @@ class CreateAccount extends StatelessWidget {
                       inputType: TextInputType.emailAddress,
                       inputAction: TextInputAction.next,
                       onChanged: (value) {
-                        user.mail = value;
+                        userServices.currentUser.mail = value;
+                        print('Nombre: ${userServices.currentUser.fullName}');
+                        print('Email: ${userServices.currentUser.mail}');
+                        print('Clave: ${userServices.currentUser.password}');
                       },
                     ),
                     PasswordInput(
@@ -115,7 +120,10 @@ class CreateAccount extends StatelessWidget {
                       inputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                       onChanged: (value) {
-                        user.password = value;
+                        userServices.currentUser.password = value;
+                        print('Nombre: ${userServices.currentUser.fullName}');
+                        print('Email: ${userServices.currentUser.mail}');
+                        print('Clave: ${userServices.currentUser.password}');
                       },
                     ),
                     /*PasswordInput(
@@ -130,10 +138,10 @@ class CreateAccount extends StatelessWidget {
                     RoundedButton(
                       buttonName: 'Registrarse',
                       onPressed: () async {
-                        print(user.mail);
-                        print(user.fullName);
-                        print(user.password);
-                        await userServices.createUser(user);
+                        print('Nombre: ${userServices.currentUser.fullName}');
+                        print('Email: ${userServices.currentUser.mail}');
+                        print('Clave: ${userServices.currentUser.password}');
+                        await userServices.createUser();
                         Navigator.pushNamed(context, 'login');
                         print("Usuario Creado");
                       },

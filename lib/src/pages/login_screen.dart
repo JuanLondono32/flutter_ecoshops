@@ -12,8 +12,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userServices = Provider.of<UsersService>(context);
-    final User user =
-        new User(mail: "", password: "", birthDate: DateTime.now());
+
     return Stack(
       children: [
         BackgroundImage(
@@ -43,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                     inputType: TextInputType.emailAddress,
                     inputAction: TextInputAction.next,
                     onChanged: (value) {
-                      user.mail = value;
+                      userServices.currentUser.mail = value;
                     },
                   ),
                   PasswordInput(
@@ -52,7 +51,7 @@ class LoginScreen extends StatelessWidget {
                     inputType: TextInputType.text,
                     inputAction: TextInputAction.done,
                     onChanged: (value) {
-                      user.password = value;
+                      userServices.currentUser.password = value;
                     },
                   ),
                   GestureDetector(
@@ -69,9 +68,12 @@ class LoginScreen extends StatelessWidget {
                   RoundedButton(
                     buttonName: 'Iniciar Sesión',
                     onPressed: () async {
-                      bool x = await userServices.verifyUser(user);
-                      print(x);
-                      Navigator.pushNamed(context, 'create_account');
+                      bool match = await userServices.verifyUser();
+                      if (match) {
+                        Navigator.pushNamed(context, '/');
+                      } else {
+                        Navigator.pushNamed(context, 'login');
+                      }
                     },
                   ),
                   SizedBox(

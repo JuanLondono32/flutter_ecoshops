@@ -5,11 +5,17 @@ import 'dart:convert';
 
 class UsersService extends ChangeNotifier {
   final String _baseUrl = 'ecoshops-1338f-default-rtdb.firebaseio.com';
-  late User user;
+  late User currentUser;
 
   bool isLoading = true;
   bool isSaving = false;
 
+  UsersService() {
+    this.currentUser =
+        new User(birthDate: DateTime.now(), mail: "", password: "");
+  }
+
+  /*
   Future saveOrCreateUser(User user) async {
     isSaving = true;
     notifyListeners();
@@ -33,10 +39,15 @@ class UsersService extends ChangeNotifier {
 
     return "";
   }
+  */
 
-  Future<String> createUser(User user) async {
+  Future<String> createUser() async {
     final url = Uri.https(_baseUrl, 'user.json');
-    final resp = await http.post(url, body: user.toJson());
+    final resp = await http.post(url, body: currentUser.toJson());
+
+    print('Respuesta del servidor: $resp');
+    this.currentUser =
+        new User(birthDate: DateTime.now(), mail: "", password: "");
 
     return "";
   }
@@ -48,7 +59,7 @@ class UsersService extends ChangeNotifier {
     return "";
   }
 
-  Future<bool> verifyUser(User user) async {
+  Future<bool> verifyUser() async {
     final url = Uri.https(_baseUrl, 'user.json');
     final resp = await http.get(url);
     bool match = false;
@@ -57,8 +68,9 @@ class UsersService extends ChangeNotifier {
 
     usersMap.forEach((key, value) {
       final tempUser = User.fromMap(value);
-      if (user.mail == tempUser.mail) {
-        if (user.password == tempUser.password) {
+      if (currentUser.mail == tempUser.mail) {
+        if (currentUser.password == tempUser.password) {
+          //this.currentUser = tempUser;
           match = true;
         }
       }
