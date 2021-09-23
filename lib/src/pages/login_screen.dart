@@ -70,7 +70,7 @@ class LoginScreen extends StatelessWidget {
                     onPressed: () async {
                       bool match = await userServices.verifyUser();
                       if (match) {
-                        Navigator.pushNamed(context, '/');
+                        Navigator.pushNamed(context, 'products');
                       } else {
                         Navigator.pushNamed(context, 'login');
                       }
