@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoshops/models/user.dart';
 import 'package:flutter_ecoshops/palette.dart';
+import 'package:flutter_ecoshops/services/users_service.dart';
 
 class RoundedButton extends StatelessWidget {
-  const RoundedButton({
-    Key? key,
-    required this.buttonName,
-  }) : super(key: key);
+  const RoundedButton({Key? key, required this.buttonName, this.onPressed})
+      : super(key: key);
 
   final String buttonName;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +20,8 @@ class RoundedButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         color: kBlue,
       ),
-      child: FlatButton(
-        onPressed: () {},
+      child: TextButton(
+        onPressed: onPressed,
         child: Text(
           buttonName,
           style: kBodyText.copyWith(fontWeight: FontWeight.bold),
