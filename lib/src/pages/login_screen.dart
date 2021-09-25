@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoshops/models/user.dart';
 import 'package:flutter_ecoshops/palette.dart';
+import 'package:flutter_ecoshops/services/users_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_ecoshops/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final userServices = Provider.of<UsersService>(context);
+
     return Stack(
       children: [
         BackgroundImage(
@@ -36,12 +41,18 @@ class LoginScreen extends StatelessWidget {
                     hint: 'Correo',
                     inputType: TextInputType.emailAddress,
                     inputAction: TextInputAction.next,
+                    onChanged: (value) {
+                      userServices.currentUser.mail = value;
+                    },
                   ),
                   PasswordInput(
                     icon: FontAwesomeIcons.lock,
                     hint: 'Contraseña',
                     inputType: TextInputType.text,
                     inputAction: TextInputAction.done,
+                    onChanged: (value) {
+                      userServices.currentUser.password = value;
+                    },
                   ),
                   GestureDetector(
                     onTap: () =>
@@ -56,6 +67,14 @@ class LoginScreen extends StatelessWidget {
                   ),
                   RoundedButton(
                     buttonName: 'Iniciar Sesión',
+                    onPressed: () async {
+                      bool match = await userServices.verifyUser();
+                      if (match) {
+                        Navigator.pushNamed(context, 'products');
+                      } else {
+                        Navigator.pushNamed(context, 'login');
+                      }
+                    },
                   ),
                   SizedBox(
                     height: 25,

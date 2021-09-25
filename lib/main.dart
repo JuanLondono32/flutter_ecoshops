@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoshops/services/categories_services.dart';
+import 'package:flutter_ecoshops/services/users_service.dart';
 import 'package:flutter_ecoshops/src/routes/routes.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,7 +17,8 @@ class AppState extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ProductsService()),
-        ChangeNotifierProvider(create: (_) => CategoriesService())
+        ChangeNotifierProvider(create: (_) => CategoriesService()),
+        ChangeNotifierProvider(create: (_) => UsersService())
       ],
       child: MyApp(),
     );

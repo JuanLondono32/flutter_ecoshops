@@ -1,9 +1,13 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoshops/main.dart';
+import 'package:flutter_ecoshops/models/user.dart';
 import 'package:flutter_ecoshops/palette.dart';
+import 'package:flutter_ecoshops/services/users_service.dart';
 import 'package:flutter_ecoshops/widgets/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class CreateAccount extends StatelessWidget {
   const CreateAccount({Key? key}) : super(key: key);
@@ -11,6 +15,8 @@ class CreateAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final userServices = Provider.of<UsersService>(context);
+
     return Stack(
       children: [
         BackgroundImage(image: 'assets/bg.jpg'),
@@ -86,32 +92,60 @@ class CreateAccount extends StatelessWidget {
                   children: [
                     TextInputField(
                       icon: FontAwesomeIcons.user,
-                      hint: 'Nombre de usuario',
+                      hint: 'Nombre',
                       inputType: TextInputType.text,
                       inputAction: TextInputAction.next,
+                      onChanged: (value) {
+                        userServices.currentUser.fullName = value;
+                        print('Nombre: ${userServices.currentUser.fullName}');
+                        print('Email: ${userServices.currentUser.mail}');
+                        print('Clave: ${userServices.currentUser.password}');
+                      },
                     ),
                     TextInputField(
                       icon: FontAwesomeIcons.envelope,
                       hint: 'Correo',
                       inputType: TextInputType.emailAddress,
                       inputAction: TextInputAction.next,
+                      onChanged: (value) {
+                        userServices.currentUser.mail = value;
+                        print('Nombre: ${userServices.currentUser.fullName}');
+                        print('Email: ${userServices.currentUser.mail}');
+                        print('Clave: ${userServices.currentUser.password}');
+                      },
                     ),
                     PasswordInput(
                       icon: FontAwesomeIcons.lock,
                       hint: 'Contraseña',
                       inputType: TextInputType.text,
                       inputAction: TextInputAction.next,
+                      onChanged: (value) {
+                        userServices.currentUser.password = value;
+                        print('Nombre: ${userServices.currentUser.fullName}');
+                        print('Email: ${userServices.currentUser.mail}');
+                        print('Clave: ${userServices.currentUser.password}');
+                      },
                     ),
-                    PasswordInput(
+                    /*PasswordInput(
                       icon: FontAwesomeIcons.lock,
                       hint: 'Confirmar contraseña',
                       inputType: TextInputType.text,
                       inputAction: TextInputAction.done,
-                    ),
+                    ),*/
                     SizedBox(
                       height: 25,
                     ),
-                    RoundedButton(buttonName: 'Registrarse'),
+                    RoundedButton(
+                      buttonName: 'Registrarse',
+                      onPressed: () async {
+                        print('Nombre: ${userServices.currentUser.fullName}');
+                        print('Email: ${userServices.currentUser.mail}');
+                        print('Clave: ${userServices.currentUser.password}');
+                        await userServices.createUser();
+                        Navigator.pushNamed(context, 'login');
+                        print("Usuario Creado");
+                      },
+                    ),
                     SizedBox(
                       height: 30,
                     ),

@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecoshops/palette.dart';
 
 class PasswordInput extends StatelessWidget {
-  const PasswordInput({
-    Key? key,
-    required this.icon,
-    required this.hint,
-    required this.inputType,
-    required this.inputAction,
-  }) : super(key: key);
+  const PasswordInput(
+      {Key? key,
+      required this.icon,
+      required this.hint,
+      required this.inputType,
+      required this.inputAction,
+      this.onChanged})
+      : super(key: key);
 
   final IconData icon;
   final String hint;
   final TextInputType inputType;
   final TextInputAction inputAction;
+  final ValueChanged<String>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class PasswordInput extends StatelessWidget {
         ),
         child: Center(
           child: TextField(
+            onChanged: onChanged,
             decoration: InputDecoration(
                 border: InputBorder.none,
                 prefixIcon: Padding(

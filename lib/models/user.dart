@@ -4,8 +4,8 @@ class User {
   User({
     this.address,
     required this.birthDate,
-    required this.fullName,
-    required this.gender,
+    this.fullName,
+    this.gender,
     required this.mail,
     required this.password,
     this.phone,
@@ -14,10 +14,10 @@ class User {
 
   String? address;
   DateTime birthDate;
-  String fullName;
-  String gender;
+  String? fullName;
+  String? gender;
   String mail;
-  int password;
+  String password;
   int? phone;
   String? id;
 
