@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-class User {
-  User({
+class Account {
+  Account({
     this.address,
     required this.birthDate,
     this.fullName,
@@ -10,6 +10,7 @@ class User {
     required this.password,
     this.phone,
     this.id,
+    required this.role,
   });
 
   String? address;
@@ -19,13 +20,14 @@ class User {
   String mail;
   String password;
   int? phone;
+  String role;
   String? id;
 
-  factory User.fromJson(String str) => User.fromMap(json.decode(str));
+  factory Account.fromJson(String str) => Account.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory User.fromMap(Map<String, dynamic> json) => User(
+  factory Account.fromMap(Map<String, dynamic> json) => Account(
         address: json["address"],
         birthDate: DateTime.parse(json["birth_date"]),
         fullName: json["full_name"],
@@ -33,6 +35,7 @@ class User {
         mail: json["mail"],
         password: json["password"],
         phone: json["phone"],
+        role: json["role"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -44,5 +47,6 @@ class User {
         "mail": mail,
         "password": password,
         "phone": phone,
+        "role": role
       };
 }

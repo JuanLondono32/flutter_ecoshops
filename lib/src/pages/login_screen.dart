@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecoshops/models/user.dart';
 import 'package:flutter_ecoshops/palette.dart';
-import 'package:flutter_ecoshops/services/users_service.dart';
+import 'package:flutter_ecoshops/services/auth_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_ecoshops/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +10,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userServices = Provider.of<UsersService>(context);
+    final authServices = Provider.of<AuthService>(context);
 
     return Stack(
       children: [
@@ -42,7 +41,7 @@ class LoginScreen extends StatelessWidget {
                     inputType: TextInputType.emailAddress,
                     inputAction: TextInputAction.next,
                     onChanged: (value) {
-                      userServices.currentUser.mail = value;
+                      authServices.currentUser.mail = value;
                     },
                   ),
                   PasswordInput(
@@ -51,7 +50,7 @@ class LoginScreen extends StatelessWidget {
                     inputType: TextInputType.text,
                     inputAction: TextInputAction.done,
                     onChanged: (value) {
-                      userServices.currentUser.password = value;
+                      authServices.currentUser.password = value;
                     },
                   ),
                   GestureDetector(
@@ -68,12 +67,8 @@ class LoginScreen extends StatelessWidget {
                   RoundedButton(
                     buttonName: 'Iniciar Sesión',
                     onPressed: () async {
-                      bool match = await userServices.verifyUser();
-                      if (match) {
-                        Navigator.pushNamed(context, 'products');
-                      } else {
-                        Navigator.pushNamed(context, 'login');
-                      }
+                      await authServices.signIn(context);
+                      Navigator.pushNamed(context, 'products');
                     },
                   ),
                   SizedBox(

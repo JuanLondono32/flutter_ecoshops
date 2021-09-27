@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoshops/models/models.dart';
+import 'package:flutter_ecoshops/services/auth_service.dart';
 import 'package:flutter_ecoshops/src/pages/loading_screen.dart';
 import 'package:flutter_ecoshops/widgets/product_card.dart';
 import 'package:provider/provider.dart';
@@ -36,6 +37,11 @@ class ProductScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
+          var authServices = Provider.of<AuthService>(context, listen: false);
+          authServices.signOut();
+          Navigator.pushNamed(context, 'login');
+
+          /*
           productsService.selectedProduct = new Product(
               categoryProd: "0",
               idEntrepreneurship: 0, //Poner ID del emprendimiento
@@ -43,6 +49,7 @@ class ProductScreen extends StatelessWidget {
               price: 0,
               stock: 0);
           Navigator.pushNamed(context, 'product_form');
+          */
         },
       ),
     );
