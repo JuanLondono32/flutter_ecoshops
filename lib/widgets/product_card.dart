@@ -18,7 +18,7 @@ class ProductCard extends StatelessWidget {
         child: Stack(
           alignment: Alignment.bottomLeft,
           children: [
-            _BackgroundImage(product.image),
+            _BackgroundImage(product.images[0]),
             _ProductDetails(title: product.nameProd),
             Positioned(top: 0, right: 0, child: _PriceTag(product.price)),
             if (product.stock == 0)

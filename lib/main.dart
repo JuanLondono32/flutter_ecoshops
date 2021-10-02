@@ -5,6 +5,8 @@ import 'package:flutter_ecoshops/src/pages/loading_screen.dart';
 import 'package:flutter_ecoshops/src/routes/routes.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_ecoshops/theme.dart';
+import 'package:flutter_ecoshops/size_config.dart';
 
 void main() => runApp(AppState());
 
@@ -42,10 +44,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Ecoshops",
-      theme: ThemeData(
-        textTheme:
-            GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
-      ),
+      theme: theme(),
+      //ThemeData(
+        //textTheme:
+          //  GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
+      //),
       debugShowCheckedModeBanner: false,
 
       //Routing
