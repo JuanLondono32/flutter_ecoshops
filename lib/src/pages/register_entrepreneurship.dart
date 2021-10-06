@@ -217,6 +217,8 @@ class RegisterEntrepreneurship extends StatelessWidget {
                           ),
                         ),
                         ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.lightGreen),
                           onPressed: formBloc.submit,
                           child: Text('Registrar'),
                         ),

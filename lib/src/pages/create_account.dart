@@ -155,7 +155,7 @@ class CreateAccount extends StatelessWidget {
                           child: Text(
                             ' Iniciar Sesión',
                             style: kBodyText.copyWith(
-                              color: kBlue,
+                              color: Colors.lightGreen,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

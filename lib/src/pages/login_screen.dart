@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_ecoshops/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_ecoshops/size_config.dart';
+
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -56,9 +57,14 @@ class LoginScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () =>
                         Navigator.pushNamed(context, 'forgot_password'),
-                    child: Text(
-                      'Olvidé mi contraseña',
-                      style: kBodyText,
+                    child: Container(
+                      child: Text(
+                        'Olvidé mi contraseña',
+                        style: kBodyText,
+                      ),
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(width: 1, color: kWhite))),
                     ),
                   ),
                   SizedBox(
