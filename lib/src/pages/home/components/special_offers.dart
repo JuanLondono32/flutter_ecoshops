@@ -26,7 +26,7 @@ class SpecialOffers extends StatelessWidget {
           child: Row(
             children: [
               SpecialOfferCard(
-                image: "assets/images/Image Banner 2.png",
+                image: "assets/images/banner1.jpg",
                 category: "Kit 1",
                 numOfBrands: 18,
                 press: () {},
