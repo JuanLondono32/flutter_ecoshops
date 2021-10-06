@@ -30,7 +30,9 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Registrar Emprendimiento",
             icon: "assets/icons/Question mark.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, 'register_entrepreneurship');
+            },
           ),
           ProfileMenu(
             text: "Log Out",
