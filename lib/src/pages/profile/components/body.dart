@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoshops/services/auth_service.dart';
+import 'package:provider/provider.dart';
 
 import 'profile_menu.dart';
 import 'profile_pic.dart';
@@ -37,7 +39,12 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Log Out",
             icon: "assets/icons/Log out.svg",
-            press: () {},
+            press: () {
+              var authServices =
+                  Provider.of<AuthService>(context, listen: false);
+              authServices.signOut();
+              Navigator.pushNamed(context, 'login');
+            },
           ),
         ],
       ),

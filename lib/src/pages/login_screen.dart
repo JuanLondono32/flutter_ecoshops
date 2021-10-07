@@ -73,8 +73,11 @@ class LoginScreen extends StatelessWidget {
                   RoundedButton(
                     buttonName: 'Iniciar Sesión',
                     onPressed: () async {
-                      await authServices.signIn(context);
-                      Navigator.pushNamed(context, '/');
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      var resp = await authServices.signIn(context);
+                      if (resp) {
+                        Navigator.pushNamed(context, '/');
+                      }
                     },
                   ),
                   SizedBox(

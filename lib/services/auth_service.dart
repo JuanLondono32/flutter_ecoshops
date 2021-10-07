@@ -65,11 +65,25 @@ class AuthService extends ChangeNotifier {
 
       var snap = await _users.doc(user!.uid).get();
       print(snap.data());
+
+      return true;
     } on FirebaseAuthException catch (e) {
+      var msj = 'Error de autenticación. Intente otra vez...';
+      if (e.code == 'user-not-found') {
+        msj = 'El usuario ingresado no se encuentra registrado.';
+      } else if (e.code == 'wrong-password') {
+        msj = 'La contraseña ingresada no coincide con el usuario.';
+      } else if (e.code == 'invalid-email') {
+        msj = 'Dirección de correo electrónico inválida.';
+      }
+
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(e.code),
+        content: Text(msj),
         duration: Duration(seconds: 2),
+        backgroundColor: Colors.lightGreen,
       ));
+
+      return false;
     }
   }
 
