@@ -1,38 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_ecoshops/services/categories_services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:flutter_ecoshops/size_config.dart';
+import 'package:provider/provider.dart';
 
 class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection("category").snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Text(
-              'No Data...',
-            );
-          } else {
-            return Padding(
-                padding: EdgeInsets.all(getProportionateScreenWidth(20)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: snapshot.data!.docs
-                      .map((doc) => CategoryCard(
-                          icon: "assets/icons/" +
-                              (doc.data() as dynamic)['icon_name'] +
-                              ".svg",
-                          text: (doc.data() as dynamic)['name_category'],
-                          press: () {
-                            // TO DO
-                          }))
-                      .toList(),
-                ));
-          }
-        });
+    final categoriesServices = Provider.of<CategoriesService>(context);
+    final List<String> names = categoriesServices.categories.keys.toList();
+    final List<String> icons = categoriesServices.categories.values.toList();
+
+    return Padding(
+        padding: EdgeInsets.all(getProportionateScreenWidth(20)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: List.generate(
+              names.length,
+              (index) => CategoryCard(
+                  icon: "assets/icons/" + icons[index] + ".svg",
+                  text: names[index],
+                  press: () {})),
+        ));
   }
 }
 

@@ -17,10 +17,10 @@ class ItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.pushNamed(
-            context,
-            'details',
-            arguments: ProductDetailsArguments(product: product),
-          ),
+        context,
+        'details',
+        arguments: ProductDetailsArguments(product: product),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -36,7 +36,10 @@ class ItemCard extends StatelessWidget {
               ),
               child: Hero(
                 tag: "${product.id}",
-                child: Image.asset(product.images[0], fit:BoxFit.fill ,),
+                child: Image.network(
+                  product.images[0],
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
           ),

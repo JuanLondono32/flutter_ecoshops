@@ -5,30 +5,31 @@ import 'dart:convert';
 
 class CategoriesService extends ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final Map<String, String> categories = {};
   late CollectionReference _categories;
 
   bool isLoading = false;
 
   CategoriesService() {
     this._categories = _firestore.collection('category');
+    print("Entró:");
     this.loadCategories();
+    print("Salió:");
   }
 
   Future loadCategories() async {
-    this.isLoading = true;
-    notifyListeners();
+    print("------------");
+    print("Inicializo busqueda de categorías.");
+    var resp = await _categories
+        .get()
+        .then((QuerySnapshot snapshot) => snapshot.docs.forEach((doc) {
+              var name = (doc.data() as dynamic)["name_category"];
+              var icon = (doc.data() as dynamic)["icon_name"];
+              categories[name] = icon;
+              print(name);
+            }));
 
-    var docs;
-
-    var snap = await _categories.get();
-    snap.docs;
-
-    print("---------------");
-    print(snap);
-    print(snap.toString());
-    print("---------------");
-
-    this.isLoading = false;
-    notifyListeners();
+    print("------------");
+    print("Terminó busqueda de categorías.");
   }
 }
