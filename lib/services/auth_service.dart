@@ -64,7 +64,9 @@ class AuthService extends ChangeNotifier {
       var user = resp.user;
 
       var snap = await _users.doc(user!.uid).get();
+      print("-----------------------");
       print(snap.data());
+      print("-----------------------");
 
       return true;
     } on FirebaseAuthException catch (e) {

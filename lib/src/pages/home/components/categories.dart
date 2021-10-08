@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:flutter_ecoshops/size_config.dart';
@@ -6,28 +7,32 @@ import 'package:flutter_ecoshops/size_config.dart';
 class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> categories = [
-      {"icon": "assets/icons/glass.svg", "text": "Vasos"},
-      {"icon": "assets/icons/Bill Icon.svg", "text": "Cepillos"},
-      {"icon": "assets/icons/Game Icon.svg", "text": "Comida"},
-      {"icon": "assets/icons/Gift Icon.svg", "text": "Hogar"},
-      {"icon": "assets/icons/Discover.svg", "text": "Categ 5"},
-    ];
-    return Padding(
-      padding: EdgeInsets.all(getProportionateScreenWidth(20)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: List.generate(
-          categories.length,
-          (index) => CategoryCard(
-            icon: categories[index]["icon"],
-            text: categories[index]["text"],
-            press: () {},
-          ),
-        ),
-      ),
-    );
+    return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection("category").snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Text(
+              'No Data...',
+            );
+          } else {
+            return Padding(
+                padding: EdgeInsets.all(getProportionateScreenWidth(20)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: snapshot.data!.docs
+                      .map((doc) => CategoryCard(
+                          icon: "assets/icons/" +
+                              (doc.data() as dynamic)['icon_name'] +
+                              ".svg",
+                          text: (doc.data() as dynamic)['name_category'],
+                          press: () {
+                            // TO DO
+                          }))
+                      .toList(),
+                ));
+          }
+        });
   }
 }
 

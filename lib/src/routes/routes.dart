@@ -6,7 +6,7 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
   return <String, WidgetBuilder>{
     '/': (BuildContext context) => HomeScreen(),
     'products': (BuildContext context) => ProductsScreen(),
-    'product_form': (BuildContext context) => ProductForm(),
+    //'product_form': (BuildContext context) => ProductForm(),
     'login': (BuildContext context) => LoginScreen(),
     'forgot_password': (BuildContext context) => ForgotPassword(),
     'create_account': (BuildContext context) => CreateAccount(),

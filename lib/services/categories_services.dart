@@ -1,18 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoshops/models/models.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class CategoriesService extends ChangeNotifier {
-  final String _baseUrl = 'ecoshops-1338f-default-rtdb.firebaseio.com';
-  //final List<Category> categories = [];
-  final Map<String, String> cat2Id = {};
-  final Map<String, String> id2Cat = {};
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  late CollectionReference _categories;
 
-  bool isLoading = true;
-  bool isSaving = false;
+  bool isLoading = false;
 
   CategoriesService() {
+    this._categories = _firestore.collection('category');
     this.loadCategories();
   }
 
@@ -20,16 +18,15 @@ class CategoriesService extends ChangeNotifier {
     this.isLoading = true;
     notifyListeners();
 
-    final url = Uri.https(_baseUrl, 'category.json');
-    final resp = await http.get(url);
+    var docs;
 
-    final Map<String, dynamic> categoriesMap = json.decode(resp.body);
+    var snap = await _categories.get();
+    snap.docs;
 
-    categoriesMap.forEach((key, value) {
-      final name = Category.fromMap(value).nameCategory;
-      cat2Id[name] = key;
-      id2Cat[key] = name;
-    });
+    print("---------------");
+    print(snap);
+    print(snap.toString());
+    print("---------------");
 
     this.isLoading = false;
     notifyListeners();
