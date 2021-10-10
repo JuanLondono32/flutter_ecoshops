@@ -1,3 +1,5 @@
+/*
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_ecoshops/services/categories_services.dart';
@@ -229,7 +231,7 @@ class __ProductScreenBodyState extends State<_ProductScreenBody> {
           ]);
 }
 
-/*
+
 class _ProductScreenBody extends StatelessWidget {
   const _ProductScreenBody({
     Key? key,

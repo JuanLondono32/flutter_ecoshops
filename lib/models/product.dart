@@ -15,8 +15,8 @@ class Product {
 
   String? categoryProd;
   String descp;
-  int idEntrepreneurship;
-  List<String> images;
+  String idEntrepreneurship;
+  List<dynamic> images;
   String nameProd;
   int price;
   int stock;
@@ -28,40 +28,37 @@ class Product {
   String toJson() => json.encode(toMap());
 
   factory Product.fromMap(Map<String, dynamic> json) => Product(
-        categoryProd: json["category_prod"],
-        descp: json["descp"],
-        idEntrepreneurship: json["id_entrepreneurship"],
-        images: json["image"],
-        nameProd: json["name_prod"],
-        price: json["price"],
-        stock: json["stock"],
-        isFavourite: json["isFavourite"]
-      );
+      categoryProd: json["category_prod"],
+      descp: json["descp"],
+      idEntrepreneurship: json["id_entrepreneurship"],
+      images: List<String>.from(json["image"].map((x) => x)),
+      nameProd: json["name_prod"],
+      price: json["price"],
+      stock: json["stock"],
+      isFavourite: json["is_favourite"]);
 
   Map<String, dynamic> toMap() => {
         "category_prod": categoryProd,
         "descp": descp,
         "id_entrepreneurship": idEntrepreneurship,
-        "image": images,
+        "image": List<dynamic>.from(images.map((x) => x)),
         "name_prod": nameProd,
         "price": price,
-        "isFavourite": isFavourite,
+        "is_favourite": isFavourite,
         "stock": stock,
       };
 
   Product copy() => Product(
-        categoryProd: this.categoryProd,
-        descp: this.descp,
-        idEntrepreneurship: this.idEntrepreneurship,
-        images: this.images,
-        nameProd: this.nameProd,
-        price: this.price,
-        stock: this.stock,
-        id: this.id,
-        isFavourite: this.isFavourite
-      );
+      categoryProd: this.categoryProd,
+      descp: this.descp,
+      idEntrepreneurship: this.idEntrepreneurship,
+      images: this.images,
+      nameProd: this.nameProd,
+      price: this.price,
+      stock: this.stock,
+      id: this.id,
+      isFavourite: this.isFavourite);
 }
-
 
 List<Product> products = [
   Product(
@@ -73,8 +70,7 @@ List<Product> products = [
       categoryProd: 'Hogar',
       stock: 100,
       isFavourite: true,
-      idEntrepreneurship: 1 
-      ),
+      idEntrepreneurship: '1'),
   Product(
       id: '2',
       nameProd: "Belt Bag",
@@ -84,8 +80,7 @@ List<Product> products = [
       categoryProd: 'Hogar',
       stock: 100,
       isFavourite: true,
-      idEntrepreneurship: 1 
-      ),
+      idEntrepreneurship: '1'),
   Product(
       id: '3',
       nameProd: "Hang Top",
@@ -95,8 +90,7 @@ List<Product> products = [
       categoryProd: 'Hogar',
       stock: 100,
       isFavourite: true,
-      idEntrepreneurship: 1 
-  ),
+      idEntrepreneurship: '1'),
   Product(
       id: '4',
       nameProd: "Old Fashion",
@@ -106,8 +100,7 @@ List<Product> products = [
       categoryProd: 'Hogar',
       stock: 100,
       isFavourite: false,
-      idEntrepreneurship: 1 
-      ),
+      idEntrepreneurship: '1'),
   Product(
       id: '5',
       nameProd: "Office Code",
@@ -117,21 +110,19 @@ List<Product> products = [
       categoryProd: 'Hogar',
       stock: 100,
       isFavourite: false,
-      idEntrepreneurship: 1 
-      ),
+      idEntrepreneurship: '1'),
   Product(
-      id: '6',
-      nameProd: "Office Code",
-      price: 234,
-      descp: dummyText,
-      images: ["assets/images/bag_6.png"],
-      categoryProd: 'Hogar',
-      stock: 100,
-      idEntrepreneurship: 1,
-      isFavourite: false,
+    id: '6',
+    nameProd: "Office Code",
+    price: 234,
+    descp: dummyText,
+    images: ["assets/images/bag_6.png"],
+    categoryProd: 'Hogar',
+    stock: 100,
+    idEntrepreneurship: '1',
+    isFavourite: false,
   ),
 ];
-
 
 List<Product> demoProducts = [
   Product(
@@ -148,7 +139,7 @@ List<Product> demoProducts = [
     isFavourite: true,
     categoryProd: 'Hogar',
     stock: 100,
-    idEntrepreneurship: 1,
+    idEntrepreneurship: '1',
   ),
   Product(
     id: "2",
@@ -160,7 +151,7 @@ List<Product> demoProducts = [
     descp: dummyText,
     categoryProd: 'Hogar',
     stock: 100,
-    idEntrepreneurship: 1,
+    idEntrepreneurship: '1',
   ),
   Product(
     id: "3",
@@ -173,7 +164,7 @@ List<Product> demoProducts = [
     isFavourite: true,
     categoryProd: 'Hogar',
     stock: 100,
-    idEntrepreneurship: 1,
+    idEntrepreneurship: '1',
   ),
   Product(
     id: "4",
@@ -186,7 +177,7 @@ List<Product> demoProducts = [
     isFavourite: true,
     categoryProd: 'Hogar',
     stock: 100,
-    idEntrepreneurship: 1,
+    idEntrepreneurship: '1',
   ),
 ];
 

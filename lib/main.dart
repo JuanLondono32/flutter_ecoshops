@@ -4,9 +4,7 @@ import 'package:flutter_ecoshops/services/services.dart';
 import 'package:flutter_ecoshops/src/pages/loading_screen.dart';
 import 'package:flutter_ecoshops/src/routes/routes.dart';
 import 'package:provider/provider.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_ecoshops/theme.dart';
-import 'package:flutter_ecoshops/size_config.dart';
 
 void main() => runApp(AppState());
 
@@ -20,6 +18,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProductsService()),
         ChangeNotifierProvider(create: (_) => CategoriesService()),
         ChangeNotifierProvider(create: (_) => AuthService()),
+        ChangeNotifierProvider(create: (_) => OrderService()),
       ],
       child: FutureBuilder(
         future: Firebase.initializeApp(),
@@ -46,8 +45,8 @@ class MyApp extends StatelessWidget {
       title: "Ecoshops",
       theme: theme(),
       //ThemeData(
-        //textTheme:
-          //  GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
+      //textTheme:
+      //  GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
       //),
       debugShowCheckedModeBanner: false,
 

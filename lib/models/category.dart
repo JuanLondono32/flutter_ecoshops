@@ -2,12 +2,12 @@ import 'dart:convert';
 
 class Category {
   Category({
-    this.descEnt,
+    this.iconName,
     required this.nameCategory,
     this.id,
   });
 
-  String? descEnt;
+  String? iconName;
   String nameCategory;
   String? id;
 
@@ -16,12 +16,12 @@ class Category {
   String toJson() => json.encode(toMap());
 
   factory Category.fromMap(Map<String, dynamic> json) => Category(
-        descEnt: json["desc_ent"],
+        iconName: json["icon_name"],
         nameCategory: json["name_category"],
       );
 
   Map<String, dynamic> toMap() => {
-        "desc_ent": descEnt,
+        "icon_name": iconName,
         "name_category": nameCategory,
       };
 }

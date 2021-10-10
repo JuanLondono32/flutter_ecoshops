@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoshops/components/product_card.dart';
 import 'package:flutter_ecoshops/models/product.dart';
@@ -8,33 +9,42 @@ import 'section_title.dart';
 class PopularProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: SectionTitle(title: "Productos Destacados", press: () {}),
-        ),
-        SizedBox(height: getProportionateScreenWidth(20)),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection("product").snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Text(
+            'No products yet...',
+          );
+        } else {
+          return Column(
             children: [
-              ...List.generate(
-                demoProducts.length,
-                (index) {
-                  
-                  return ProductCard(product: demoProducts[index]);
-
-                 // return SizedBox
-                 //     .shrink(); // here by default width and height is 0
-                },
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(20)),
+                child:
+                    SectionTitle(title: "Productos Destacados", press: () {}),
               ),
-              SizedBox(width: getProportionateScreenWidth(20)),
+              SizedBox(height: getProportionateScreenWidth(20)),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    ...snapshot.data!.docs.map((doc) {
+                      print(doc.data());
+                      var newProduct =
+                          new Product.fromMap((doc.data() as dynamic));
+                      newProduct.id = doc.id;
+                      return ProductCard(product: newProduct);
+                    }).toList(),
+                    SizedBox(width: getProportionateScreenWidth(20)),
+                  ],
+                ),
+              )
             ],
-          ),
-        )
-      ],
+          );
+        }
+      },
     );
   }
 }

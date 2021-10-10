@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoshops/components/default_button.dart';
 import 'package:flutter_ecoshops/models/product.dart';
+import 'package:flutter_ecoshops/services/services.dart';
 import 'package:flutter_ecoshops/size_config.dart';
+import 'package:provider/provider.dart';
 
 import 'color_dots.dart';
 import 'product_description.dart';
@@ -15,6 +17,8 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ordersService = Provider.of<OrderService>(context);
+
     return ListView(
       children: [
         ProductImages(product: product),
@@ -42,7 +46,16 @@ class Body extends StatelessWidget {
                         ),
                         child: DefaultButton(
                           text: "Add To Cart",
-                          press: () {},
+                          press: () {
+                            ordersService.addDetail(product.id!, 1, product);
+                            Navigator.pop(context);
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  "El producto se ha agregado a la canasta!!"),
+                              duration: Duration(seconds: 2),
+                              backgroundColor: Colors.lightGreen,
+                            ));
+                          },
                         ),
                       ),
                     ),

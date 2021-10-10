@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoshops/services/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_ecoshops/models/Cart.dart';
 
 import 'package:flutter_ecoshops/size_config.dart';
+import 'package:provider/provider.dart';
 import 'cart_card.dart';
 
 class Body extends StatefulWidget {
@@ -13,19 +15,22 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
+    final ordersService = Provider.of<OrderService>(context);
+
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
       child: ListView.builder(
-        itemCount: demoCarts.length,
+        itemCount: ordersService.orders.length,
         itemBuilder: (context, index) => Padding(
           padding: EdgeInsets.symmetric(vertical: 10),
           child: Dismissible(
-            key: Key(demoCarts[index].product.id.toString()),
+            key: Key(ordersService.orders[index].idProduct),
             direction: DismissDirection.endToStart,
             onDismissed: (direction) {
               setState(() {
-                demoCarts.removeAt(index);
+                ordersService.orders.removeAt(index);
+                //demoCarts.removeAt(index);
               });
             },
             background: Container(
@@ -41,7 +46,7 @@ class _BodyState extends State<Body> {
                 ],
               ),
             ),
-            child: CartCard(cart: demoCarts[index]),
+            child: CartCard(cart: ordersService.orders[index]),
           ),
         ),
       ),

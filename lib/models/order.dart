@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class Order {
   Order({
-    required this.address,
+    this.address,
     required this.idUser,
     required this.mail,
     required this.orderDate,
@@ -12,8 +12,8 @@ class Order {
     this.id,
   });
 
-  String address;
-  int idUser;
+  String? address;
+  String idUser;
   String mail;
   DateTime orderDate;
   String status;
