@@ -7,7 +7,6 @@ import 'package:flutter_ecoshops/services/categories_services.dart';
 import 'package:flutter_ecoshops/src/pages/product_detail/details_screen.dart';
 import 'package:provider/provider.dart';
 
-import 'categorries.dart';
 import 'item_card.dart';
 
 class Body extends StatefulWidget {
@@ -22,9 +21,6 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     final categoriesServices = Provider.of<CategoriesService>(context);
     List<String> categories = categoriesServices.categories.keys.toList();
-
-    print(categories);
-    print(categories[selectedIndex]);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,17 +55,22 @@ class _BodyState extends State<Body> {
                   return Text('No products yet...');
                 } else {
                   return GridView.builder(
-                    itemCount: snapshot.data!.size,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: kDefaultPaddin,
-                      crossAxisSpacing: kDefaultPaddin,
-                      childAspectRatio: 0.75,
-                    ),
-                    itemBuilder: (context, index) => ItemCard(
-                        product: Product.fromMap(
-                            (snapshot.data!.docs[index].data() as dynamic))),
-                  );
+                      itemCount: snapshot.data!.size,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: kDefaultPaddin,
+                        crossAxisSpacing: kDefaultPaddin,
+                        childAspectRatio: 0.75,
+                      ),
+                      itemBuilder: (context, index) {
+                        var ref = snapshot.data!.docs[index];
+                        var newProduct =
+                            new Product.fromMap((ref.data() as dynamic));
+                        newProduct.id = ref.id;
+                        return ItemCard(
+                          product: newProduct,
+                        );
+                      });
                 }
               },
             ),

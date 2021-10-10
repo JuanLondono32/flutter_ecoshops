@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoshops/services/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_ecoshops/components/default_button.dart';
 
 import 'package:flutter_ecoshops/constants.dart';
 import 'package:flutter_ecoshops/size_config.dart';
+import 'package:provider/provider.dart';
 
 class CheckoutCard extends StatelessWidget {
   const CheckoutCard({
@@ -12,6 +14,9 @@ class CheckoutCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ordersService = Provider.of<OrderService>(context);
+    final autService = Provider.of<AuthService>(context);
+
     return Container(
       padding: EdgeInsets.symmetric(
         vertical: getProportionateScreenWidth(15),
@@ -68,7 +73,7 @@ class CheckoutCard extends StatelessWidget {
                     text: "Total:\n",
                     children: [
                       TextSpan(
-                        text: "\$337.15",
+                        text: "\$${ordersService.getTotal()}",
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ],
@@ -78,7 +83,15 @@ class CheckoutCard extends StatelessWidget {
                   width: getProportionateScreenWidth(190),
                   child: DefaultButton(
                     text: "Check Out",
-                    press: () {},
+                    press: () async {
+                      await ordersService.sendOrder(autService.currentUser);
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("La orden fue generada en el sistema!!"),
+                        duration: Duration(seconds: 2),
+                        backgroundColor: Colors.lightGreen,
+                      ));
+                    },
                   ),
                 ),
               ],

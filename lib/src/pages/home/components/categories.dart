@@ -9,6 +9,7 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categoriesServices = Provider.of<CategoriesService>(context);
+    categoriesServices.loadCategories();
     final List<String> names = categoriesServices.categories.keys.toList();
     final List<String> icons = categoriesServices.categories.values.toList();
 

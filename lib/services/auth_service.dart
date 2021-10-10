@@ -38,13 +38,9 @@ class AuthService extends ChangeNotifier {
       UserCredential resp = await _auth.createUserWithEmailAndPassword(
           email: currentUser.mail, password: currentUser.password);
       var user = resp.user;
-      print("-----------------------------");
-      print(user!.uid);
-      print("-----------------------------");
 
       // Save user in data base
-      DocumentReference docRef = _users.doc(user.uid);
-      print(currentUser.toMap());
+      DocumentReference docRef = _users.doc(user!.uid);
       await docRef
           .set(currentUser.toMap())
           .whenComplete(() => print("Usuario agregado a la base de datos."))
@@ -53,6 +49,7 @@ class AuthService extends ChangeNotifier {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(e.code),
         duration: Duration(seconds: 2),
+        backgroundColor: Colors.lightGreen,
       ));
     }
   }
@@ -64,9 +61,8 @@ class AuthService extends ChangeNotifier {
       var user = resp.user;
 
       var snap = await _users.doc(user!.uid).get();
-      print("-----------------------");
-      print(snap.data());
-      print("-----------------------");
+      this.currentUser = new Account.fromMap(snap.data() as dynamic);
+      this.currentUser.id = user.uid;
 
       return true;
     } on FirebaseAuthException catch (e) {

@@ -1,18 +1,20 @@
 import 'dart:convert';
 
+import 'package:flutter_ecoshops/models/product.dart';
+
 class DetailOrder {
   DetailOrder({
     required this.amount,
     required this.finalPrice,
-    required this.idOrder,
     required this.idProduct,
+    this.product,
     this.id,
   });
 
   int amount;
   int finalPrice;
-  int idOrder;
-  int idProduct;
+  String idProduct;
+  Product? product;
   String? id;
 
   factory DetailOrder.fromJson(String str) =>
@@ -23,14 +25,12 @@ class DetailOrder {
   factory DetailOrder.fromMap(Map<String, dynamic> json) => DetailOrder(
         amount: json["amount"],
         finalPrice: json["final_price"],
-        idOrder: json["id_order"],
         idProduct: json["id_product"],
       );
 
   Map<String, dynamic> toMap() => {
         "amount": amount,
         "final_price": finalPrice,
-        "id_order": idOrder,
         "id_product": idProduct,
       };
 }

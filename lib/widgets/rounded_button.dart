@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecoshops/models/user.dart';
 import 'package:flutter_ecoshops/palette.dart';
-import 'package:flutter_ecoshops/services/users_service.dart';
 
 class RoundedButton extends StatelessWidget {
   const RoundedButton({Key? key, required this.buttonName, this.onPressed})

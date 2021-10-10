@@ -32,18 +32,11 @@ class PopularProducts extends StatelessWidget {
                   children: [
                     ...snapshot.data!.docs.map((doc) {
                       print(doc.data());
-                      return ProductCard(
-                          product: Product.fromMap((doc.data() as dynamic)));
+                      var newProduct =
+                          new Product.fromMap((doc.data() as dynamic));
+                      newProduct.id = doc.id;
+                      return ProductCard(product: newProduct);
                     }).toList(),
-                    //...List.generate(
-                    //demoProducts.length,
-                    //(index) {
-                    //return ProductCard(product: demoProducts[index]);
-
-                    // return SizedBox
-                    //     .shrink(); // here by default width and height is 0
-                    //                    },
-                    //),
                     SizedBox(width: getProportionateScreenWidth(20)),
                   ],
                 ),
