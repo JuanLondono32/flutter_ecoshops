@@ -46,8 +46,16 @@ class AuthService extends ChangeNotifier {
           .whenComplete(() => print("Usuario agregado a la base de datos."))
           .catchError((e) => print(e));
     } on FirebaseAuthException catch (e) {
+      var msj = 'Error de autenticación. Intente otra vez...';
+      if (e.code == 'invalid-email') {
+        msj = 'El correo ingresado no es válido.';
+      } else if (e.code == 'weak-password') {
+        msj = 'La contraseña ingresada no es segura.';
+      } else if (e.code == 'email-already-in-use') {
+        msj = 'Dirección de correo electrónico ya registrada.';
+      }
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(e.code),
+        content: Text(msj),
         duration: Duration(seconds: 2),
         backgroundColor: Colors.lightGreen,
       ));
