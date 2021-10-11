@@ -49,11 +49,17 @@ class CustomBottomNavBar extends StatelessWidget {
                     Navigator.pushNamed(context, "/"),
               ),
               IconButton(
-                icon: SvgPicture.asset("assets/icons/Heart Icon.svg"),
+                icon: SvgPicture.asset("assets/icons/Heart Icon.svg",
+                  color: MenuState.favourite == selectedMenu
+                      ? kPrimaryColor
+                      : inActiveIconColor,),
                 onPressed: () {},
               ),
               IconButton(
-                icon: SvgPicture.asset("assets/icons/gift.svg"),
+                icon: SvgPicture.asset("assets/icons/gift.svg",
+                  color: MenuState.products == selectedMenu
+                      ? kPrimaryColor
+                      : inActiveIconColor,),
                 onPressed: () =>
                     Navigator.pushNamed(context, "products"),
               ),

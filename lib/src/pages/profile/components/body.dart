@@ -15,21 +15,23 @@ class Body extends StatelessWidget {
           ProfilePic(),
           SizedBox(height: 20),
           ProfileMenu(
-            text: "Mi Cuenta",
+            text: "Mi cuenta",
             icon: "assets/icons/User Icon.svg",
             press: () {
               Navigator.pushNamed(context, 'update_user');
             },
           ),
           ProfileMenu(
-            text: "Notifications",
-            icon: "assets/icons/Bell.svg",
+            text: "Compras",
+            icon: "assets/icons/check.svg",
             press: () {},
           ),
           ProfileMenu(
-            text: "Settings",
-            icon: "assets/icons/Settings.svg",
-            press: () {},
+            text: "Mi emprendimiento",
+            icon: "assets/icons/shop.svg",
+            press: () {
+              Navigator.pushNamed(context, 'my_entrepreneurship');
+            },
           ),
           ProfileMenu(
             text: "Registrar Emprendimiento",
@@ -39,7 +41,7 @@ class Body extends StatelessWidget {
             },
           ),
           ProfileMenu(
-            text: "Log Out",
+            text: "Cerrar Sesión",
             icon: "assets/icons/Log out.svg",
             press: () {
               var authServices =

@@ -28,6 +28,30 @@ class ProductDescription extends StatelessWidget {
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(20),
+            vertical: 5,
+          ),
+          child: GestureDetector(
+            onTap: () {},
+            child: Row(
+              children: [
+                Text(
+                  "Vidrios Eukarya",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600, color: kPrimaryColor),
+                ),
+                SizedBox(width: 5),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 12,
+                  color: kPrimaryColor,
+                ),
+              ],
+            ),
+          ),
+        ),
         Align(
           alignment: Alignment.centerRight,
           child: Container(
@@ -56,33 +80,10 @@ class ProductDescription extends StatelessWidget {
           ),
           child: Text(
             product.descp,
-            maxLines: 3,
+            maxLines: 5,
           ),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: getProportionateScreenWidth(20),
-            vertical: 10,
-          ),
-          child: GestureDetector(
-            onTap: () {},
-            child: Row(
-              children: [
-                Text(
-                  "See More Detail",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600, color: kPrimaryColor),
-                ),
-                SizedBox(width: 5),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 12,
-                  color: kPrimaryColor,
-                ),
-              ],
-            ),
-          ),
-        )
+        
       ],
     );
   }

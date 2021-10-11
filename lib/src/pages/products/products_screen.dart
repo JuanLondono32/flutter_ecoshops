@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:flutter_ecoshops/constants.dart';
 import 'package:flutter_ecoshops/src/pages/products/components/body.dart';
+import 'package:flutter_ecoshops/components/coustom_bottom_nav_bar.dart';
+import 'package:flutter_ecoshops/enums.dart';
 
 class ProductsScreen extends StatelessWidget {
   @override
@@ -10,6 +12,7 @@ class ProductsScreen extends StatelessWidget {
     return Scaffold(
       appBar: buildAppBar(context),
       body: Body(),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.products),
     );
   }
 
