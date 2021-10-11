@@ -15,9 +15,11 @@ class Body extends StatelessWidget {
           ProfilePic(),
           SizedBox(height: 20),
           ProfileMenu(
-            text: "My Account",
+            text: "Mi Cuenta",
             icon: "assets/icons/User Icon.svg",
-            press: () => {},
+            press: () {
+              Navigator.pushNamed(context, 'update_user');
+            },
           ),
           ProfileMenu(
             text: "Notifications",

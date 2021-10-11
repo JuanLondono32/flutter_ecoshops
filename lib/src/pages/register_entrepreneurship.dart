@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecoshops/src/pages/details/components/color_dots.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
 class AllFieldsFormBloc extends FormBloc<String, String> {
