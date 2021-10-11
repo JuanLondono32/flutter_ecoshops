@@ -93,6 +93,30 @@ class AuthService extends ChangeNotifier {
     }
   }
 
+  Future updateUser(Map updates) async {
+    // obtener current_user como mapa
+    var userID = this.currentUser.id;
+    print(userID);
+
+    var cUser = this.currentUser.toMap();
+    print(cUser);
+    updates.keys.forEach((key) {
+      cUser[key] = updates[key];
+    });
+    print(cUser);
+
+    // Actualizando el current_user
+    print("Antes actualizar");
+    this.currentUser = Account.fromMap(cUser);
+    this.currentUser.id = userID;
+    print("Después actualizar");
+
+    // Actualizando la base de datos
+    print("Antes BD");
+    await _users.doc(userID).set(this.currentUser.toMap());
+    print("Después BD");
+  }
+
   Future signOut() async {
     this.currentUser = new Account(
         birthDate: DateTime.now(), mail: '', password: '', role: 'c');

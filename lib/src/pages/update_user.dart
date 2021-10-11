@@ -1,37 +1,48 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ecoshops/src/pages/details/components/color_dots.dart';
+import 'package:flutter_ecoshops/services/services.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:provider/provider.dart';
 import 'register_entrepreneurship.dart';
 
 class UserForm extends FormBloc<String, String> {
   final select1 = SelectFieldBloc(
+    name: 'gender',
     items: ['Masculino', 'Femenino', 'Otro'],
   );
 
   final text1 = TextFieldBloc(
+    name: 'full_name',
     validators: [FieldBlocValidators.required],
   );
 
   final text2 = TextFieldBloc(
+    name: 'address',
     validators: [FieldBlocValidators.required],
   );
 
   final text3 = TextFieldBloc(
+    name: 'phone',
     validators: [FieldBlocValidators.required],
   );
 
-  final text4 = TextFieldBloc(
-    validators: [FieldBlocValidators.required],
-  );
+  final date1 = InputFieldBloc<DateTime, dynamic>(
+      name: 'birth_date', toJson: (value) => Timestamp.fromDate(value!));
 
-  final date1 = InputFieldBloc<DateTime, dynamic>();
+  late AuthService authServices;
 
-  UserForm() {
+  UserForm(AuthService auth) {
+    authServices = auth;
+    text1.updateInitialValue(authServices.currentUser.fullName);
+    select1.updateInitialValue(authServices.currentUser.gender);
+    text2.updateInitialValue(authServices.currentUser.address);
+    text3.updateInitialValue(authServices.currentUser.phone.toString());
+    date1.updateInitialValue(authServices.currentUser.birthDate);
+
     addFieldBlocs(fieldBlocs: [
       text1,
       text2,
       text3,
-      text4,
       date1,
       select1,
     ]);
@@ -45,10 +56,16 @@ class UserForm extends FormBloc<String, String> {
   @override
   void onSubmitting() async {
     try {
-      await Future<void>.delayed(Duration(milliseconds: 500));
+      var updates = state.toJson();
+      print(updates);
+      updates['phone'] = int.parse(updates['phone']);
+      print(updates);
+      await authServices.updateUser(updates);
 
       emitSuccess(canSubmitAgain: true);
     } catch (e) {
+      print(e);
+      print(e.toString());
       emitFailure();
     }
   }
@@ -57,8 +74,9 @@ class UserForm extends FormBloc<String, String> {
 class UpdateUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final authServices = Provider.of<AuthService>(context);
     return BlocProvider(
-      create: (context) => UserForm(),
+      create: (BuildContext context) => UserForm(authServices),
       child: Builder(
         builder: (context) {
           final formBloc = BlocProvider.of<UserForm>(context);
@@ -83,14 +101,19 @@ class UpdateUser extends StatelessWidget {
                 onSuccess: (context, state) {
                   LoadingDialog.hide(context);
 
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (_) => SuccessScreen()));
+                  Navigator.pop(context);
+
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                        "Los datos de usuario fueron actualizados correctamente."),
+                    duration: Duration(seconds: 2),
+                    backgroundColor: Colors.lightGreen,
+                  ));
                 },
                 onFailure: (context, state) {
                   LoadingDialog.hide(context);
 
-                  Scaffold.of(context).showSnackBar(
-                      SnackBar(content: Text(state.failureResponse!)));
+                  print(state.failureResponse);
                 },
                 child: SingleChildScrollView(
                   physics: ClampingScrollPhysics(),
@@ -114,15 +137,7 @@ class UpdateUser extends StatelessWidget {
                           itemBuilder: (context, item) => item,
                         ),
                         TextFieldBlocBuilder(
-                          keyboardType: TextInputType.emailAddress,
                           textFieldBloc: formBloc.text2,
-                          decoration: InputDecoration(
-                            labelText: 'Correo Electrónico',
-                            prefixIcon: Icon(Icons.alternate_email_rounded),
-                          ),
-                        ),
-                        TextFieldBlocBuilder(
-                          textFieldBloc: formBloc.text3,
                           decoration: InputDecoration(
                             labelText: 'Dirección',
                             prefixIcon: Icon(Icons.maps_home_work_outlined),
@@ -130,7 +145,7 @@ class UpdateUser extends StatelessWidget {
                         ),
                         TextFieldBlocBuilder(
                           keyboardType: TextInputType.phone,
-                          textFieldBloc: formBloc.text4,
+                          textFieldBloc: formBloc.text3,
                           decoration: InputDecoration(
                             labelText: 'Celular',
                             prefixIcon: Icon(Icons.phone_android_rounded),
@@ -144,7 +159,7 @@ class UpdateUser extends StatelessWidget {
                           lastDate: DateTime(2100),
                           decoration: InputDecoration(
                             labelText: 'Fecha de Nacimiento',
-                            prefixIcon: Icon(Icons.calendar_today),
+                            prefixIcon: Icon(Icons.cake),
                           ),
                         ),
                         ElevatedButton(
