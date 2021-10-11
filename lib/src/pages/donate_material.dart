@@ -70,8 +70,14 @@ class DonateMaterial extends StatelessWidget {
                 onSuccess: (context, state) {
                   LoadingDialog.hide(context);
 
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (_) => SuccessScreen()));
+                  Navigator.pop(context);
+
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                        "Los datos de usuario fueron actualizados correctamente."),
+                    duration: Duration(seconds: 2),
+                    backgroundColor: Colors.lightGreen,
+                  ));
                 },
                 onFailure: (context, state) {
                   LoadingDialog.hide(context);
