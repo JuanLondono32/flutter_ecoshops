@@ -19,7 +19,7 @@ class Entrepreneurship {
   int commission;
   int descpEmp;
   String entrepreneurshipName;
-  int idUser;
+  String idUser;
   String logo;
   int? maxDiscount;
   int? minDiscount;

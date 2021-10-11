@@ -8,6 +8,7 @@ class Account {
     this.gender,
     required this.mail,
     required this.password,
+    this.profile,
     this.phone,
     this.id,
     required this.role,
@@ -20,6 +21,7 @@ class Account {
   String mail;
   String password;
   int? phone;
+  String? profile;
   String role;
   String? id;
 
@@ -34,6 +36,7 @@ class Account {
         gender: json["gender"],
         mail: json["mail"],
         password: json["password"],
+        profile: json["profile"],
         phone: json["phone"],
         role: json["role"],
       );
@@ -46,6 +49,7 @@ class Account {
         "gender": gender,
         "mail": mail,
         "password": password,
+        "profile": profile,
         "phone": phone,
         "role": role
       };

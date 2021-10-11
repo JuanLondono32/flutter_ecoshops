@@ -19,6 +19,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CategoriesService()),
         ChangeNotifierProvider(create: (_) => AuthService()),
         ChangeNotifierProvider(create: (_) => OrderService()),
+        ChangeNotifierProvider(create: (_) => EntrepreneurshipService()),
       ],
       child: FutureBuilder(
         future: Firebase.initializeApp(),
