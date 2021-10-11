@@ -34,7 +34,7 @@ class ProductDescription extends StatelessWidget {
             vertical: 5,
           ),
           child: GestureDetector(
-            onTap: () {},
+            onTap: () => Navigator.pushNamed(context, 'entrepreneurships'),
             child: Row(
               children: [
                 Text(
