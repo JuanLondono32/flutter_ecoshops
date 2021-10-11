@@ -15,5 +15,7 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
     'cart': (BuildContext context) => CartScreen(),
     'register_entrepreneurship': (BuildContext context) =>
         RegisterEntrepreneurship(),
+    'my_entrepreneurship': (BuildContext context) =>
+        EntrepreneurPage(),
   };
 }
