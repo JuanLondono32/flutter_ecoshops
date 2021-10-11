@@ -12,13 +12,14 @@ class Body extends StatefulWidget {
   @override
   _BodyState createState() => _BodyState();
 }
- const Color black = Color(0xff000000);
- const Color white = Color(0xffffffff);
- const Color blue = Color(0xff0D47A1);
- const Color grey = Color(0xffbdbdbd);
- const Color lineWhite = Color(0xffececec);
- const Color lineGrey = Color(0xffbdbdbd);
- const Color lineTextGrey = Color(0xff9E9E9E);
+
+const Color black = Color(0xff000000);
+const Color white = Color(0xffffffff);
+const Color blue = Color(0xff0D47A1);
+const Color grey = Color(0xffbdbdbd);
+const Color lineWhite = Color(0xffececec);
+const Color lineGrey = Color(0xffbdbdbd);
+const Color lineTextGrey = Color(0xff9E9E9E);
 
 class _BodyState extends State<Body> {
   int selectedIndex = 0;
@@ -41,7 +42,8 @@ class _BodyState extends State<Body> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
-                        image: AssetImage("assets/images/eukarya_logo.jpg"), fit: BoxFit.cover)),
+                        image: AssetImage("assets/images/eukarya_logo.jpg"),
+                        fit: BoxFit.cover)),
               ),
               SizedBox(
                 width: 20,
@@ -66,17 +68,19 @@ class _BodyState extends State<Body> {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                        color: Color(0xFF9DBE76), borderRadius: BorderRadius.circular(5)),
+                        color: Color(0xFF9DBE76),
+                        borderRadius: BorderRadius.circular(5)),
                     child: GestureDetector(
-                      //onTap: () => Navigator.pushNamed(context, 'donate_material'),
+                      onTap: () =>
+                          Navigator.pushNamed(context, 'donate_material'),
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Center(
-                          child: Text("Donar Materia Prima",
+                          child: Text(
+                            "Donar Materia Prima",
                             style: TextStyle(fontSize: 18, color: white),
                           ),
                         ),
-                        
                       ),
                     ),
                   )
@@ -85,7 +89,6 @@ class _BodyState extends State<Body> {
             ],
           ),
         ),
-
         SizedBox(
           height: 20,
         ),
@@ -95,7 +98,6 @@ class _BodyState extends State<Body> {
         SizedBox(
           height: 20,
         ),
-        
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
           child: Text("Productos", style: Theme.of(context).textTheme.headline5
@@ -147,8 +149,7 @@ class _BodyState extends State<Body> {
             ),
           ),
         ),
-        
-          ],
+      ],
     );
   }
 

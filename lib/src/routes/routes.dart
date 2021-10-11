@@ -13,10 +13,11 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
     'profile': (BuildContext context) => ProfileScreen(),
     'details': (BuildContext context) => DetailsScreen(),
     'cart': (BuildContext context) => CartScreen(),
-    'register_entrepreneurship': (BuildContext context) => RegisterEntrepreneurship(),
+    'register_entrepreneurship': (BuildContext context) =>
+        RegisterEntrepreneurship(),
     'my_entrepreneurship': (BuildContext context) => EntrepreneurPage(),
     'entrepreneurships': (BuildContext context) => EntrepreneurshipsPage(),
     'update_user': (BuildContext context) => UpdateUser(),
-    //'donate_material': (BuildContext context) => DonateMaterial(),
+    'donate_material': (BuildContext context) => DonateMaterial(),
   };
 }
