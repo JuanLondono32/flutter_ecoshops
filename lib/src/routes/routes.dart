@@ -17,5 +17,6 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
         RegisterEntrepreneurship(),
     'my_entrepreneurship': (BuildContext context) =>
         EntrepreneurPage(),
+    'update_user': (BuildContext context) => UpdateUser(),
   };
 }

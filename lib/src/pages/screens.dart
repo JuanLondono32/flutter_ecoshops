@@ -13,3 +13,5 @@ export 'details/details_screen.dart';
 export 'profile/profile_screen.dart';
 export 'register_entrepreneurship.dart';
 export 'my_entrepreneurship.dart';
+export 'update_user.dart';
+
