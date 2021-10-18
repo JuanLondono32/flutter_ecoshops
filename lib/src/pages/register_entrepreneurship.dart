@@ -1,42 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoshops/services/services.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:provider/provider.dart';
 
 class AllFieldsFormBloc extends FormBloc<String, String> {
   final beOnKits = SelectFieldBloc(
+    name: "be_on_kit",
     validators: [FieldBlocValidators.required],
     items: ['Sí', 'No'],
   );
 
   final rawMaterial = SelectFieldBloc(
+    name: "raw",
     validators: [FieldBlocValidators.required],
     items: ['Sí', 'No'],
   );
 
   final descRawMaterial = TextFieldBloc(
+    name: "raw_materials",
     validators: [FieldBlocValidators.required],
   );
 
   final minDisc = TextFieldBloc(
+    name: 'max_discount',
     validators: [FieldBlocValidators.required],
   );
 
   final maxDisc = TextFieldBloc(
+    name: 'min_discount',
     validators: [FieldBlocValidators.required],
   );
 
   final text1 = TextFieldBloc(
+    name: 'entrepreneurship_name',
     validators: [FieldBlocValidators.required],
   );
 
   final text2 = TextFieldBloc(
+    name: "user_social_media",
     validators: [FieldBlocValidators.required],
   );
 
   final text3 = TextFieldBloc(
+    name: "descp_emp",
     validators: [FieldBlocValidators.required],
   );
 
-  AllFieldsFormBloc() {
+  late EntrepreneurshipService entServices;
+  late String userID;
+
+  AllFieldsFormBloc(EntrepreneurshipService entrep, String id) {
+    entServices = entrep;
+    userID = id;
+
     addFieldBlocs(fieldBlocs: [
       text1,
       text2,
@@ -91,15 +107,17 @@ class AllFieldsFormBloc extends FormBloc<String, String> {
 
   @override
   void onSubmitting() async {
-    print(beOnKits.value);
-    print(minDisc.value);
-    print(maxDisc.value);
-    print(descRawMaterial.value);
     try {
-      await Future<void>.delayed(Duration(milliseconds: 500));
+      var newEntrep = state.toJson();
+      newEntrep.remove("raw");
+      newEntrep["be_on_kit"] = (newEntrep["be_on_kit"] == "Sí");
+      print(newEntrep);
+
+      await entServices.register(newEntrep, userID);
 
       emitSuccess(canSubmitAgain: true);
     } catch (e) {
+      print(e.toString());
       emitFailure();
     }
   }
@@ -108,8 +126,11 @@ class AllFieldsFormBloc extends FormBloc<String, String> {
 class RegisterEntrepreneurship extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final authServices = Provider.of<AuthService>(context);
+    final entServices = Provider.of<EntrepreneurshipService>(context);
     return BlocProvider(
-      create: (context) => AllFieldsFormBloc(),
+      create: (context) =>
+          AllFieldsFormBloc(entServices, authServices.currentUser.id!),
       child: Builder(
         builder: (context) {
           final formBloc = BlocProvider.of<AllFieldsFormBloc>(context);
@@ -135,8 +156,17 @@ class RegisterEntrepreneurship extends StatelessWidget {
                 onSuccess: (context, state) {
                   LoadingDialog.hide(context);
 
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (_) => SuccessScreen()));
+                  authServices.currentUser.role = 'e';
+
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                        "Los datos de usuario fueron actualizados correctamente."),
+                    duration: Duration(seconds: 2),
+                    backgroundColor: Colors.lightGreen,
+                  ));
                 },
                 onFailure: (context, state) {
                   LoadingDialog.hide(context);
@@ -264,6 +294,7 @@ class LoadingDialog extends StatelessWidget {
   }
 }
 
+/*
 class SuccessScreen extends StatelessWidget {
   SuccessScreen({Key? key}) : super(key: key);
 
@@ -295,3 +326,4 @@ class SuccessScreen extends StatelessWidget {
     );
   }
 }
+*/

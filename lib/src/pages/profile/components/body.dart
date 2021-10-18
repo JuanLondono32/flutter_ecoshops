@@ -8,6 +8,7 @@ import 'profile_pic.dart';
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var authServices = Provider.of<AuthService>(context);
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(vertical: 20),
       child: Column(
@@ -26,26 +27,25 @@ class Body extends StatelessWidget {
             icon: "assets/icons/check.svg",
             press: () {},
           ),
-          ProfileMenu(
-            text: "Mi emprendimiento",
-            icon: "assets/icons/shop.svg",
-            press: () {
-              Navigator.pushNamed(context, 'my_entrepreneurship');
-            },
-          ),
-          ProfileMenu(
-            text: "Registrar Emprendimiento",
-            icon: "assets/icons/Question mark.svg",
-            press: () {
-              Navigator.pushNamed(context, 'register_entrepreneurship');
-            },
-          ),
+          (authServices.currentUser.role == "e")
+              ? ProfileMenu(
+                  text: "Mi emprendimiento",
+                  icon: "assets/icons/shop.svg",
+                  press: () {
+                    Navigator.pushNamed(context, 'my_entrepreneurship');
+                  },
+                )
+              : ProfileMenu(
+                  text: "Registrar Emprendimiento",
+                  icon: "assets/icons/Question mark.svg",
+                  press: () {
+                    Navigator.pushNamed(context, 'register_entrepreneurship');
+                  },
+                ),
           ProfileMenu(
             text: "Cerrar Sesión",
             icon: "assets/icons/Log out.svg",
             press: () {
-              var authServices =
-                  Provider.of<AuthService>(context, listen: false);
               authServices.signOut();
               Navigator.pushNamed(context, 'login');
             },
