@@ -17,3 +17,4 @@ export 'entrepeneurships/entrepreneurships.dart';
 export 'update_user.dart';
 export 'donate_material.dart';
 export 'kits/kits_screen.dart';
+export 'my_products/my_products_screen.dart';

@@ -20,5 +20,6 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
     'update_user': (BuildContext context) => UpdateUser(),
     'donate_material': (BuildContext context) => DonateMaterial(),
     'kits': (BuildContext context) => KitScreen(),
+    'my_products': (BuildContext context) => MyProducts(),
   };
 }

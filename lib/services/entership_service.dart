@@ -22,8 +22,10 @@ class EntrepreneurshipService extends ChangeNotifier {
     var query = await _entrepreneurship.doc(entrepreneurshipID).get();
 
     var profile = query.data();
+    var entrepreneuship = new Entrepreneurship.fromMap(profile as dynamic);
+    entrepreneuship.id = query.id;
 
-    return new Entrepreneurship.fromMap(profile as dynamic);
+    return entrepreneuship;
   }
 
   Future<Entrepreneurship> getProfileByUserId(String userID) async {
@@ -32,7 +34,9 @@ class EntrepreneurshipService extends ChangeNotifier {
         await _entrepreneurship.where("id_user", isEqualTo: userID).get();
 
     var profile = query.docs[0].data();
+    var entrepreneuship = new Entrepreneurship.fromMap(profile as dynamic);
+    entrepreneuship.id = query.docs[0].id;
 
-    return new Entrepreneurship.fromMap(profile as dynamic);
+    return entrepreneuship;
   }
 }
