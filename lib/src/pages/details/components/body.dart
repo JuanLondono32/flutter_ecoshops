@@ -45,13 +45,13 @@ class Body extends StatelessWidget {
                           top: getProportionateScreenWidth(15),
                         ),
                         child: DefaultButton(
-                          text: "Add To Cart",
+                          text: "Agregar al Carrito",
                           press: () {
                             ordersService.addDetail(product.id!, 1, product);
                             Navigator.pop(context);
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text(
-                                  "El producto se ha agregado a la canasta!!"),
+                                  "El producto se ha agregado al carrito!"),
                               duration: Duration(seconds: 2),
                               backgroundColor: Colors.lightGreen,
                             ));

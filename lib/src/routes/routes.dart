@@ -19,5 +19,6 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
     'entrepreneurships': (BuildContext context) => EntrepreneurshipsPage(),
     'update_user': (BuildContext context) => UpdateUser(),
     'donate_material': (BuildContext context) => DonateMaterial(),
+    'kits': (BuildContext context) => KitScreen(),
   };
 }
