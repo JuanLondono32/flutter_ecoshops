@@ -28,13 +28,15 @@ class SpecialOffers extends StatelessWidget {
               SpecialOfferCard(
                 image: "assets/images/banner1.jpg",
                 category: "Kit 1",
-                numOfBrands: 18,
-                press: () {},
+                numOfBrands: 3,
+                press: () {
+                  Navigator.pushNamed(context, 'kits');
+                },
               ),
               SpecialOfferCard(
                 image: "assets/images/Image Banner 3.png",
                 category: "Kit 2",
-                numOfBrands: 24,
+                numOfBrands: 4,
                 press: () {},
               ),
               SizedBox(width: getProportionateScreenWidth(20)),
@@ -104,7 +106,7 @@ class SpecialOfferCard extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        TextSpan(text: "$numOfBrands Brands")
+                        TextSpan(text: "$numOfBrands Emprendimientos")
                       ],
                     ),
                   ),
