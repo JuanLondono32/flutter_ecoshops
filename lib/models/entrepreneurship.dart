@@ -17,12 +17,12 @@ class Entrepreneurship {
 
   bool beOnKit;
   int commission;
-  int descpEmp;
+  String descpEmp;
   String entrepreneurshipName;
-  int idUser;
+  String idUser;
   String logo;
-  int? maxDiscount;
-  int? minDiscount;
+  String? maxDiscount;
+  String? minDiscount;
   String? rawMaterials;
   String? userSocialMedia;
   String? id;
