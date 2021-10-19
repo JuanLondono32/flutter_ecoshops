@@ -5,12 +5,12 @@ import 'package:flutter_ecoshops/models/product.dart';
 import 'package:flutter_ecoshops/constants.dart';
 import 'package:flutter_ecoshops/size_config.dart';
 
- final colors = [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ];
+final colors = [
+  Color(0xFFF6625E),
+  Color(0xFF836DB8),
+  Color(0xFFDECB9C),
+  Colors.white,
+];
 
 class ColorDots extends StatelessWidget {
   const ColorDots({
@@ -29,13 +29,6 @@ class ColorDots extends StatelessWidget {
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
       child: Row(
         children: [
-          ...List.generate(
-            colors.length,
-            (index) => ColorDot(
-              color: colors[index],
-              isSelected: index == selectedColor,
-            ),
-          ),
           Spacer(),
           RoundedIconBtn(
             icon: Icons.remove,
@@ -45,7 +38,7 @@ class ColorDots extends StatelessWidget {
           Text(
             "1",
             style: TextStyle(fontSize: 20),
-            ),
+          ),
           SizedBox(width: getProportionateScreenWidth(20)),
           RoundedIconBtn(
             icon: Icons.add,
