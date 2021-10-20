@@ -25,7 +25,7 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Compras",
             icon: "assets/icons/check.svg",
-            press: () {},
+            press: () {Navigator.pushNamed(context, 'orders');},
           ),
           (authServices.currentUser.role == "e")
               ? ProfileMenu(

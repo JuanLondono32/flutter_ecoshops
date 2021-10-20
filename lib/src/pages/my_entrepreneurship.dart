@@ -68,7 +68,7 @@ class MyEntrepreneurship extends State<EntrepreneurPage> {
                                 fit: BoxFit.cover)),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: 15,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +76,7 @@ class MyEntrepreneurship extends State<EntrepreneurPage> {
                           Text(
                             snapshot.data!.entrepreneurshipName,
                             style: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.w400),
+                                fontSize: 22, fontWeight: FontWeight.w400),
                           ),
                           SizedBox(
                             height: 10,
@@ -120,7 +120,9 @@ class MyEntrepreneurship extends State<EntrepreneurPage> {
                 ProfileMenu(
                   text: "Ventas",
                   icon: "assets/icons/shop.svg",
-                  press: () => {},
+                  press: () {
+                    Navigator.pushNamed(context, 'sales');
+                  },
                 ),
                 ProfileMenu(
                   text: "Mis Productos",

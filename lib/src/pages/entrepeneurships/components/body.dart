@@ -58,7 +58,7 @@ class _BodyState extends State<Body> {
                                 fit: BoxFit.cover)),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: 15,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +66,7 @@ class _BodyState extends State<Body> {
                           Text(
                             snapshot.data!.entrepreneurshipName,
                             style: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.w400),
+                                fontSize: 22, fontWeight: FontWeight.w400),
                           ),
                           SizedBox(
                             height: 10,
