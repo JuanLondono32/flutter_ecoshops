@@ -31,7 +31,6 @@ class PopularProducts extends StatelessWidget {
                 child: Row(
                   children: [
                     ...snapshot.data!.docs.map((doc) {
-                      print(doc.data());
                       var newProduct =
                           new Product.fromMap((doc.data() as dynamic));
                       newProduct.id = doc.id;

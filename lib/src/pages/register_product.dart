@@ -36,6 +36,7 @@ class Fields extends FormBloc<String, String> {
   );
 
   String imageURL = "";
+  File? imageFile;
 
   late EntrepreneurshipService entServices;
   late String userID;
@@ -66,6 +67,9 @@ class Fields extends FormBloc<String, String> {
       var newProd = state.toJson();
 
       var entrep = await entServices.getProfileByUserId(userID);
+      newProd["stock"] = int.parse(newProd["stock"]);
+      newProd["price"] = int.parse(newProd["price"]);
+      newProd["is_favourite"] = false;
       newProd["id_entrepreneurship"] = entrep.id;
       newProd["image"] = [imageURL];
 
@@ -184,8 +188,8 @@ class RegisterProduct extends State<RegisterProductPage> {
                           style: ElevatedButton.styleFrom(
                               primary: Colors.lightGreen),
                           onPressed: () async {
-                            var url = selectFile();
-                            formBloc.imageURL = await url;
+                            var url = await selectFile();
+                            formBloc.imageURL = url;
                           },
                           child: Text('Seleccionar foto'),
                         ),
@@ -195,13 +199,6 @@ class RegisterProduct extends State<RegisterProductPage> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: 14, fontWeight: FontWeight.w500),
-                        ),
-                        SizedBox(height: 8),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.lightGreen),
-                          onPressed: uploadFile,
-                          child: Text('Subir foto'),
                         ),
                         SizedBox(
                           height: 100,
@@ -238,6 +235,7 @@ class RegisterProduct extends State<RegisterProductPage> {
     UploadTask uploadTask = storageReference.child(fileName).putFile(file!);
 
     String url = await (await uploadTask).ref.getDownloadURL();
+    print(url);
     return url;
   }
 
