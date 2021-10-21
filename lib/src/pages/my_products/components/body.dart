@@ -88,7 +88,9 @@ class _BodyState extends State<Body> {
         Center(
           child: RoundedButton(
             buttonName: 'Agregar Producto',
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, 'register_product');
+            },
           ),
         ),
       ],
