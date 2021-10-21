@@ -3,15 +3,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_ecoshops/constants.dart';
 import '../profile/components/profile_menu.dart';
 import "components/body.dart";
+
 class EntrepreneurshipsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)?.settings.arguments as Map;
+    print(arguments['id_ent']);
     return Scaffold(
       backgroundColor: white,
       appBar: AppBar(
         title: Text("Emprendimiento"),
       ),
-      body: Body(),
+      body: Body(id: arguments['id_ent']),
     );
   }
 }

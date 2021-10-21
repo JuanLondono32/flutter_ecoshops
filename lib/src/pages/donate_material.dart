@@ -1,21 +1,28 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'register_entrepreneurship.dart';
 
 class DonationForm extends FormBloc<String, String> {
   final text1 = TextFieldBloc(
+    name: "address",
     validators: [FieldBlocValidators.required],
   );
 
   final text2 = TextFieldBloc(
+    name: "description",
     validators: [FieldBlocValidators.required],
   );
 
   final text3 = TextFieldBloc(
+    name: "email",
     validators: [FieldBlocValidators.required],
   );
 
-  DonationForm() {
+  late String idEmp;
+
+  DonationForm(String id) {
+    idEmp = id;
     addFieldBlocs(fieldBlocs: [
       text1,
       text2,
@@ -31,7 +38,10 @@ class DonationForm extends FormBloc<String, String> {
   @override
   void onSubmitting() async {
     try {
-      await Future<void>.delayed(Duration(milliseconds: 500));
+      var inst = FirebaseFirestore.instance.collection("donation").doc();
+      var newDonation = state.toJson();
+      newDonation["id_entrepreneurship"] = idEmp;
+      await inst.set(newDonation);
 
       emitSuccess(canSubmitAgain: true);
     } catch (e) {
@@ -43,8 +53,9 @@ class DonationForm extends FormBloc<String, String> {
 class DonateMaterial extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)?.settings.arguments as Map;
     return BlocProvider(
-      create: (context) => DonationForm(),
+      create: (context) => DonationForm(arguments['id_ent']),
       child: Builder(
         builder: (context) {
           final formBloc = BlocProvider.of<DonationForm>(context);
@@ -73,8 +84,7 @@ class DonateMaterial extends StatelessWidget {
                   Navigator.pop(context);
 
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(
-                        "Los datos de usuario fueron actualizados correctamente."),
+                    content: Text("Los donación se registró correctamente."),
                     duration: Duration(seconds: 2),
                     backgroundColor: Colors.lightGreen,
                   ));

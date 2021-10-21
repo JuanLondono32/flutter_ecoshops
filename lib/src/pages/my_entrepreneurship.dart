@@ -125,18 +125,8 @@ class MyEntrepreneurship extends State<EntrepreneurPage> {
                 ProfileMenu(
                   text: "Mis Productos",
                   icon: "assets/icons/gift.svg",
-                  press: () => {},
-                ),
-                ProfileMenu(
-                  text: "Registrar Producto",
-                  icon: "assets/icons/check.svg",
-                  press: () {},
-                ),
-                ProfileMenu(
-                  text: "Kits",
-                  icon: "assets/icons/check.svg",
                   press: () {
-                    Navigator.pushNamed(context, '');
+                    Navigator.pushNamed(context, 'my_products');
                   },
                 ),
                 ProfileMenu(
