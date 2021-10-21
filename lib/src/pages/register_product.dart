@@ -1,4 +1,5 @@
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoshops/services/services.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
@@ -34,12 +35,16 @@ class Fields extends FormBloc<String, String> {
     validators: [FieldBlocValidators.required],
   );
 
+  String imageURL = "";
+
   late EntrepreneurshipService entServices;
   late String userID;
+  late ProductsService prodServices;
 
-  Fields(EntrepreneurshipService entrep, String id) {
+  Fields(EntrepreneurshipService entrep, String id, ProductsService prod) {
     entServices = entrep;
     userID = id;
+    prodServices = prod;
 
     addFieldBlocs(fieldBlocs: [
       text1,
@@ -58,12 +63,13 @@ class Fields extends FormBloc<String, String> {
   @override
   void onSubmitting() async {
     try {
-      var newEntrep = state.toJson();
-      newEntrep.remove("raw");
-      newEntrep["be_on_kit"] = (newEntrep["be_on_kit"] == "Sí");
-      print(newEntrep);
+      var newProd = state.toJson();
 
-      await entServices.register(newEntrep, userID);
+      var entrep = await entServices.getProfileByUserId(userID);
+      newProd["id_entrepreneurship"] = entrep.id;
+      newProd["image"] = [imageURL];
+
+      await prodServices.insertProduct(newProd);
 
       emitSuccess(canSubmitAgain: true);
     } catch (e) {
@@ -84,9 +90,11 @@ class RegisterProduct extends State<RegisterProductPage> {
   Widget build(BuildContext context) {
     final authServices = Provider.of<AuthService>(context);
     final entServices = Provider.of<EntrepreneurshipService>(context);
+    final prodServices = Provider.of<ProductsService>(context);
     final fileName = file != null ? basename(file!.path) : 'No File Selected';
     return BlocProvider(
-      create: (context) => Fields(entServices, authServices.currentUser.id!),
+      create: (context) =>
+          Fields(entServices, authServices.currentUser.id!, prodServices),
       child: Builder(
         builder: (context) {
           final formBloc = BlocProvider.of<Fields>(context);
@@ -175,7 +183,10 @@ class RegisterProduct extends State<RegisterProductPage> {
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               primary: Colors.lightGreen),
-                          onPressed: SelectFile,
+                          onPressed: () async {
+                            var url = selectFile();
+                            formBloc.imageURL = await url;
+                          },
                           child: Text('Seleccionar foto'),
                         ),
                         SizedBox(height: 8),
@@ -213,12 +224,20 @@ class RegisterProduct extends State<RegisterProductPage> {
     );
   }
 
-  Future SelectFile() async {
+  Future<String> selectFile() async {
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
 
-    if (result == null) return;
-    final path = result.files.single.path!;
+    final path = result!.files.single.path!;
     setState(() => file = File(path));
+
+    final fileName = basename(file!.path);
+    final destination = 'Products/$fileName';
+
+    var ref = FirebaseStorage.instance.ref().child(destination);
+    UploadTask uploadTask = ref.putFile(file!);
+
+    String url = await uploadTask.snapshot.ref.getDownloadURL();
+    return url;
   }
 
   Future uploadFile() async {
@@ -230,6 +249,7 @@ class RegisterProduct extends State<RegisterProductPage> {
     FirebaseApi.uploadFile(destination, file!);
   }
 }
+
 
 
 /*
