@@ -29,6 +29,11 @@ class Fields extends FormBloc<String, String> {
     validators: [FieldBlocValidators.required],
   );
 
+  final text4 = TextFieldBloc(
+    name: 'stock',
+    validators: [FieldBlocValidators.required],
+  );
+
   late EntrepreneurshipService entServices;
   late String userID;
 
@@ -40,6 +45,7 @@ class Fields extends FormBloc<String, String> {
       text1,
       text2,
       text3,
+      text4,
       select1,
     ]);
   }
@@ -156,6 +162,14 @@ class RegisterProduct extends State<RegisterProductPage> {
                           decoration: InputDecoration(
                             labelText: 'Precio',
                             prefixIcon: Icon(Icons.attach_money_rounded),
+                          ),
+                        ),
+                        TextFieldBlocBuilder(
+                          textFieldBloc: formBloc.text4,
+                          decoration: InputDecoration(
+                            labelText: 'Stock',
+                            prefixIcon:
+                                Icon(Icons.production_quantity_limits_rounded),
                           ),
                         ),
                         ElevatedButton(
