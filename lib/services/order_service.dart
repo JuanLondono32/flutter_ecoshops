@@ -56,4 +56,66 @@ class OrderService extends ChangeNotifier {
       await _prod.update({'stock': ord.product!.stock - ord.amount});
     });
   }
+
+  Future<List> getOrders(String userID) async {
+    List ordersList = [];
+    var order = _firestore.collection("order");
+    var userOrders = await order.where("id_user", isEqualTo: userID).get();
+    await Future.forEach(userOrders.docs,
+        (QueryDocumentSnapshot element) async {
+      Map dato = element.data() as dynamic;
+      dato["products"] = [];
+      var detalles = await FirebaseFirestore.instance
+          .collection("order")
+          .doc(element.id)
+          .collection("detail_order")
+          .get();
+      await Future.forEach(detalles.docs,
+          (QueryDocumentSnapshot element2) async {
+        Map elementData = element2.data() as dynamic;
+        var producto = await FirebaseFirestore.instance
+            .collection("product")
+            .doc(elementData["id_product"])
+            .get();
+        var dataProducto = producto.data();
+        dato["products"].add(dataProducto!["name_prod"]);
+      });
+      ordersList.add(dato);
+    });
+    return ordersList;
+  }
+
+  Future<List> getOrdersByEnt(String entID) async {
+    List ordersList = [];
+    var order = _firestore.collection("order");
+    var userOrders = await order.get();
+    await Future.forEach(userOrders.docs,
+        (QueryDocumentSnapshot element) async {
+      Map dato = element.data() as dynamic;
+      dato["products"] = [];
+      bool flag = false;
+      var detalles = await FirebaseFirestore.instance
+          .collection("order")
+          .doc(element.id)
+          .collection("detail_order")
+          .get();
+      await Future.forEach(detalles.docs,
+          (QueryDocumentSnapshot element2) async {
+        Map elementData = element2.data() as dynamic;
+        var producto = await FirebaseFirestore.instance
+            .collection("product")
+            .doc(elementData["id_product"])
+            .get();
+        var dataProducto = producto.data() as dynamic;
+        if (dataProducto["id_entrepreneurship"] == entID) {
+          flag = true;
+          dato["products"].add(dataProducto!["name_prod"]);
+        }
+      });
+      if (flag) {
+        ordersList.add(dato);
+      }
+    });
+    return ordersList;
+  }
 }

@@ -1,10 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoshops/services/auth_service.dart';
+import 'package:flutter_ecoshops/services/order_service.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_ecoshops/models/models.dart';
 import 'package:flutter_ecoshops/constants.dart';
 import 'package:flutter_ecoshops/src/pages/order_card.dart';
-
-
+import 'package:provider/provider.dart';
 
 class OrdersScreen extends StatelessWidget {
   @override
@@ -34,7 +36,6 @@ class OrdersScreen extends StatelessWidget {
           ),
           onPressed: () {},
         ),
-        
         SizedBox(width: kDefaultPaddin / 2)
       ],
     );
@@ -51,13 +52,40 @@ class _BodyState extends State<BodyOrder> {
 
   @override
   Widget build(BuildContext context) {
-    
-final ordenes_prueba=[
-{'id_orden':1,'productos':['Producto 1','Producto 2'],'direccion':'Cra 12','estado':'No pagado','total':30000},
-{'id_orden':2,'productos':['Producto 1','Producto 2'],'direccion':'Cra 12','estado':'No pagado','total':30000},
-{'id_orden':3,'productos':['Producto 1','Producto 2'],'direccion':'Cra 12','estado':'No pagado','total':30000},
-{'id_orden':4,'productos':['Producto 1','Producto 2'],'direccion':'Cra 12','estado':'No pagado','total':30000},
-];
+    final authServices = Provider.of<AuthService>(context);
+    final orderServices = Provider.of<OrderService>(context);
+    final lista = orderServices.getOrders(authServices.currentUser.id!);
+
+    final ordenes_prueba = [
+      {
+        'id_orden': 1,
+        'productos': ['Producto 1', 'Producto 2'],
+        'direccion': 'Cra 12',
+        'estado': 'No pagado',
+        'total': 30000
+      },
+      {
+        'id_orden': 2,
+        'productos': ['Producto 1', 'Producto 2'],
+        'direccion': 'Cra 12',
+        'estado': 'No pagado',
+        'total': 30000
+      },
+      {
+        'id_orden': 3,
+        'productos': ['Producto 1', 'Producto 2'],
+        'direccion': 'Cra 12',
+        'estado': 'No pagado',
+        'total': 30000
+      },
+      {
+        'id_orden': 4,
+        'productos': ['Producto 1', 'Producto 2'],
+        'direccion': 'Cra 12',
+        'estado': 'No pagado',
+        'total': 30000
+      },
+    ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -68,17 +96,27 @@ final ordenes_prueba=[
               ),
         ),
         Expanded(
-        child:Padding(
-          padding: const EdgeInsets.symmetric(vertical: kDefaultPaddin),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: ordenes_prueba.length,
-              itemBuilder: (context, index) => OrderCard(info:ordenes_prueba[index]),
+            padding: const EdgeInsets.symmetric(vertical: kDefaultPaddin),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
+              child: FutureBuilder(
+                  future: lista,
+                  builder:
+                      (BuildContext context, AsyncSnapshot<List> snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) =>
+                            OrderCard(info: snapshot.data![index]),
+                      );
+                    } else {
+                      return Text('Cargando...');
+                    }
+                  }),
             ),
           ),
-        ),
         )
         /*Expanded(
           child: Padding(
@@ -117,6 +155,4 @@ final ordenes_prueba=[
       ],
     );
   }
-
 }
-

@@ -121,7 +121,8 @@ class MyEntrepreneurship extends State<EntrepreneurPage> {
                   text: "Ventas",
                   icon: "assets/icons/shop.svg",
                   press: () {
-                    Navigator.pushNamed(context, 'sales');
+                    Navigator.pushNamed(context, 'sales',
+                        arguments: {"id_ent": snapshot.data!.id});
                   },
                 ),
                 ProfileMenu(

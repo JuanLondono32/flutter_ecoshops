@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoshops/constants.dart';
 import 'package:flutter_ecoshops/models/models.dart';
+import 'package:flutter_ecoshops/services/order_service.dart';
 import 'package:flutter_ecoshops/widgets/widgets.dart';
 import 'package:flutter_ecoshops/services/categories_services.dart';
 import 'package:flutter_ecoshops/src/pages/product_detail/details_screen.dart';
@@ -21,6 +22,7 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     final categoriesServices = Provider.of<CategoriesService>(context);
+    final orderServices = Provider.of<OrderService>(context);
     List<String> categories = categoriesServices.categories.keys.toList();
 
     return Column(
@@ -69,7 +71,17 @@ class _BodyState extends State<Body> {
         Center(
           child: RoundedButton(
             buttonName: 'Agregar al Carrito',
-            onPressed: () {
+            onPressed: () async {
+              var prods = await FirebaseFirestore.instance
+                  .collection("product")
+                  .where("category_prod", isEqualTo: "Aseo")
+                  .get();
+              await Future.forEach(prods.docs, (QueryDocumentSnapshot element) {
+                var newProd = Product.fromMap(element.data() as dynamic);
+                newProd.id = element.id;
+                newProd.price = (newProd.price * 0.9).toInt();
+                orderServices.addDetail(element.id, 1, newProd);
+              });
               Navigator.pushNamed(context, '/');
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text("El kit se ha agregado al carrito!"),

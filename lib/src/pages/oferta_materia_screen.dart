@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoshops/models/entrepreneurship.dart';
+import 'package:flutter_ecoshops/services/auth_service.dart';
+import 'package:flutter_ecoshops/services/entership_service.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_ecoshops/models/models.dart';
 import 'package:flutter_ecoshops/constants.dart';
 import 'package:flutter_ecoshops/src/pages/oferta_materia_card.dart';
-
-
+import 'package:provider/provider.dart';
 
 class OfertaMateriaScreen extends StatelessWidget {
   @override
@@ -34,7 +37,6 @@ class OfertaMateriaScreen extends StatelessWidget {
           ),
           onPressed: () {},
         ),
-        
         SizedBox(width: kDefaultPaddin / 2)
       ],
     );
@@ -51,34 +53,85 @@ class _BodyState extends State<BodyOferta> {
 
   @override
   Widget build(BuildContext context) {
-    
-final ofertas_prueba=[
-{'direccion':"Cra 12", 'descripcion':"Botellas de vidrio", 'email':"donante@mail.com"},
-{'direccion':"Cra 12", 'descripcion':"Botellas de vidrio", 'email':"donante@mail.com"},
-{'direccion':"Cra 12", 'descripcion':"Botellas de vidrio", 'email':"donante@mail.com"},
-{'direccion':"Cra 12", 'descripcion':"Botellas de vidrio", 'email':"donante@mail.com"},
-];
+    final authServices = Provider.of<AuthService>(context);
+    final entServices = Provider.of<EntrepreneurshipService>(context);
+    final Future<Entrepreneurship> profile =
+        entServices.getProfileByUserId(authServices.currentUser.id!);
+    final ofertas_prueba = [
+      {
+        'direccion': "Cra 12",
+        'descripcion': "Botellas de vidrio",
+        'email': "donante@mail.com"
+      },
+      {
+        'direccion': "Cra 12",
+        'descripcion': "Botellas de vidrio",
+        'email': "donante@mail.com"
+      },
+      {
+        'direccion': "Cra 12",
+        'descripcion': "Botellas de vidrio",
+        'email': "donante@mail.com"
+      },
+      {
+        'direccion': "Cra 12",
+        'descripcion': "Botellas de vidrio",
+        'email': "donante@mail.com"
+      },
+    ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
-          child: Text("Oferta de Materia Prima", style: Theme.of(context).textTheme.headline5
+          child: Text("Oferta de Materia Prima",
+              style: Theme.of(context).textTheme.headline5
               // .copyWith(fontWeight: FontWeight.bold),
               ),
         ),
         Expanded(
-        child:Padding(
-          padding: const EdgeInsets.symmetric(vertical: kDefaultPaddin),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: ofertas_prueba.length,
-              itemBuilder: (context, index) => OfertaMateriaCard(info:ofertas_prueba[index]),
+            padding: const EdgeInsets.symmetric(vertical: kDefaultPaddin),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
+              child: FutureBuilder(
+                  future: profile,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<Entrepreneurship> snapshot) {
+                    if (snapshot.hasData) {
+                      return StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection("donation")
+                            .where('id_entrepreneurship',
+                                isEqualTo: snapshot.data!.id)
+                            .snapshots(),
+                        builder: (context, snapshot2) {
+                          if (!snapshot2.hasData) {
+                            return Text('No donations yet...');
+                          } else {
+                            return ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount: snapshot2.data!.size,
+                              itemBuilder: (context, index) =>
+                                  OfertaMateriaCard(
+                                      info: snapshot2.data!.docs[index].data()
+                                          as dynamic),
+                            );
+                          }
+                        },
+                      );
+                    } else {
+                      return Text('Cargando...');
+                    }
+                  }),
+              /*child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: ofertas_prueba.length,
+                itemBuilder: (context, index) =>
+                    OfertaMateriaCard(info: ofertas_prueba[index]),
+              ),*/
             ),
           ),
-        ),
         )
         /*Expanded(
           child: Padding(
@@ -117,6 +170,4 @@ final ofertas_prueba=[
       ],
     );
   }
-
 }
-
