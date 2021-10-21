@@ -24,5 +24,6 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
     'orders': (BuildContext context) => OrdersScreen(),
     'sales': (BuildContext context) => SalesScreen(),
     'oferta': (BuildContext context) => OfertaMateriaScreen(),
+    'register_product': (BuildContext context) => RegisterProductPage(),
   };
 }

@@ -85,7 +85,8 @@ class _BodyState extends State<Body> {
                                 borderRadius: BorderRadius.circular(5)),
                             child: GestureDetector(
                               onTap: () => Navigator.pushNamed(
-                                  context, 'donate_material'),
+                                  context, 'donate_material',
+                                  arguments: {"id_ent": snapshot.data!.id}),
                               child: Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Center(
