@@ -1,8 +1,12 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoshops/services/services.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:provider/provider.dart';
 import 'register_entrepreneurship.dart';
+import 'dart:io';
+import 'package:path/path.dart';
+import 'package:flutter_ecoshops/api/firebase_api.dart';
 
 class Fields extends FormBloc<String, String> {
   final select1 = SelectFieldBloc(
@@ -63,11 +67,18 @@ class Fields extends FormBloc<String, String> {
   }
 }
 
-class RegisterProduct extends StatelessWidget {
+class RegisterProductPage extends StatefulWidget {
+  @override
+  RegisterProduct createState() => RegisterProduct();
+}
+
+class RegisterProduct extends State<RegisterProductPage> {
+  File? file;
   @override
   Widget build(BuildContext context) {
     final authServices = Provider.of<AuthService>(context);
     final entServices = Provider.of<EntrepreneurshipService>(context);
+    final fileName = file != null ? basename(file!.path) : 'No File Selected';
     return BlocProvider(
       create: (context) => Fields(entServices, authServices.currentUser.id!),
       child: Builder(
@@ -150,6 +161,29 @@ class RegisterProduct extends StatelessWidget {
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               primary: Colors.lightGreen),
+                          onPressed: SelectFile,
+                          child: Text('Seleccionar foto'),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          fileName,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(height: 8),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.lightGreen),
+                          onPressed: uploadFile,
+                          child: Text('Subir foto'),
+                        ),
+                        SizedBox(
+                          height: 100,
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.lightGreen),
                           onPressed: formBloc.submit,
                           child: Text('Registrar'),
                         ),
@@ -163,6 +197,23 @@ class RegisterProduct extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future SelectFile() async {
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+
+    if (result == null) return;
+    final path = result.files.single.path!;
+    setState(() => file = File(path));
+  }
+
+  Future uploadFile() async {
+    if (file == null) return;
+
+    final fileName = basename(file!.path);
+    final destination = 'Products/$fileName';
+
+    FirebaseApi.uploadFile(destination, file!);
   }
 }
 
