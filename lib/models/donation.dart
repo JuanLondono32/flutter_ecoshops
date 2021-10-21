@@ -12,7 +12,7 @@ class Donation {
   String address;
   String description;
   String email;
-  int idEntrepreneurship;
+  String idEntrepreneurship;
   String? id;
 
   factory Donation.fromJson(String str) => Donation.fromMap(json.decode(str));
