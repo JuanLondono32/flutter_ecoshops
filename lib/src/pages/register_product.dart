@@ -233,10 +233,11 @@ class RegisterProduct extends State<RegisterProductPage> {
     final fileName = basename(file!.path);
     final destination = 'Products/$fileName';
 
-    var ref = FirebaseStorage.instance.ref().child(destination);
-    UploadTask uploadTask = ref.putFile(file!);
+    final Reference storageReference =
+        FirebaseStorage.instance.ref().child("Products");
+    UploadTask uploadTask = storageReference.child(fileName).putFile(file!);
 
-    String url = await uploadTask.snapshot.ref.getDownloadURL();
+    String url = await (await uploadTask).ref.getDownloadURL();
     return url;
   }
 
