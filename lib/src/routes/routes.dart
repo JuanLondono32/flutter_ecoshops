@@ -21,6 +21,9 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
     'donate_material': (BuildContext context) => DonateMaterial(),
     'kits': (BuildContext context) => KitScreen(),
     'my_products': (BuildContext context) => MyProducts(),
+    'orders': (BuildContext context) => OrdersScreen(),
+    'sales': (BuildContext context) => SalesScreen(),
+    'oferta': (BuildContext context) => OfertaMateriaScreen(),
     'register_product': (BuildContext context) => RegisterProductPage(),
   };
 }
