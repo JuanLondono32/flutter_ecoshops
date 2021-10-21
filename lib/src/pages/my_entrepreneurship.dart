@@ -135,7 +135,7 @@ class MyEntrepreneurship extends State<EntrepreneurPage> {
                   text: "Oferta de Materia Prima",
                   icon: "assets/icons/check.svg",
                   press: () {
-                    Navigator.pushNamed(context, '');
+                    Navigator.pushNamed(context, 'oferta');
                   },
                 ),
               ],
